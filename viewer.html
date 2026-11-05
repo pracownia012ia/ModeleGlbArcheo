@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podgląd modelu 3D</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #1e1e1e; font-family: sans-serif; }
+    model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
+    
+    /* Styl dla ekranu startowego przed kliknięciem (reveal="manual") */
+    #lazy-load-poster {
+      position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+      background-size: contain; background-repeat: no-repeat; background-position: center;
+    }
+    #button-load {
+      background-color: rgba(0, 0, 0, 0.75); color: white; cursor: pointer;
+      border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 20px; font-weight: 600; font-size: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      z-index: 100; transition: background 0.2s;
+    }
+    #button-load:hover { background-color: rgba(30, 30, 30, 0.95); }
+  </style>
+</head>
+<body>
+
+  <model-viewer 
+    id="viewer" 
+    reveal="manual" 
+    exposure="1" 
+    camera-controls 
+    touch-action="pan-y" 
+    auto-rotate 
+    tone-mapping="aces" 
+    shadow-intensity="1" 
+    alt="Model 3D zabytku">
+    
+    <!-- Plakat (miniaturka) w tle przed pobraniem modelu -->
+    <div id="lazy-load-poster" slot="poster"></div>
+    
+    <!-- Przycisk wyzwalający pobranie pliku .glb -->
+    <div id="button-load" slot="poster">Załaduj model 3D</div>
+
+  </model-viewer>
+
+  <script>
+    // 1. Wpisz tutaj swój adres z Cloudflare R2 (lub jsDelivr CDN):
+    const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev"; 
+    // Alternatywa dla jsDelivr (<20MB): const BAZA_URL = "https://cdn.jsdelivr.net/gh/pracownia012ia/ModelViewerTemp@main/public/models";
+
+    const params = new URLSearchParams(window.location.search);
+    const plik = params.get('plik');
+    const plakat = params.get('poster'); // opcjonalna miniaturka .webp / .jpg
+    const viewer = document.getElementById('viewer');
+    const loadButton = document.getElementById('button-load');
+    const posterDiv = document.getElementById('lazy-load-poster');
+
+    if (plik) {
+      viewer.src = `${BAZA_URL}/${plik}`;
+    }
+
+    // Jeśli w adresie podano miniaturkę (np. ?plik=waza.glb&poster=waza.webp), ustaw ją w tle
+    if (plakat) {
+      posterDiv.style.backgroundImage = `url('${BAZA_URL}/${plakat}')`;
+    }
+
+    // Obsługa kliknięcia - rozpoczyna pobieranie modelu 3D dopiero po kliknięciu
+    loadButton.addEventListener('click', () => {
+      loadButton.textContent = "Ładowanie modelu...";
+      viewer.dismissPoster();
+    });
+  </script>
+
+</body>
+</html>
