@@ -248,7 +248,7 @@
     // KLUCZOWE: Czekamy na pełne załadowanie silnika <model-viewer>, zanim wywołamy pierwszy model!
     customElements.whenDefined('model-viewer').then(() => {
       if (listaZabytkow.length > 0) {
-        document.getElementById('liczba-zabytkow').textContent = `Zabytki w okresie (${okres}) - (${listaZabytkow.length}):`;
+        document.getElementById('liczba-zabytkow').textContent = `Zabytki w okresie  - (${listaZabytkow.length}):`;
         listaZabytkow.forEach((zabytek, index) => {
           const btn = document.createElement('button');
           btn.className = 'artifact-btn';
