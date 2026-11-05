@@ -343,12 +343,14 @@ toggleMeasureBtn.addEventListener('click', () => {
     clearMeasureBtn.style.display = "inline-block";
     // Zablokuj obracanie modelu, by kliknięcie trafiało w punkt
     viewer.removeAttribute('camera-controls');
+	viewer.autoRotate = false;
   } else {
     toggleMeasureBtn.textContent = "Włącz miarkę";
     measureOutput.textContent = "";
     clearMeasureBtn.style.display = "none";
     // Przywróć swobodne obracanie
     viewer.setAttribute('camera-controls', '');
+	viewer.autoRotate = true;
     usunZnaczniki();
   }
 });
