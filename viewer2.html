@@ -198,7 +198,7 @@
     function rozpocznijPobieranieModelu() {
       if (!aktualnyZabytek) return;
       czyOdblokowanoOkno = true;
-      const docelowyUrl = `${BAZA_URL}/${aktualnyZabytek.plik}`;
+      const docelowyUrl = `${BAZA_URL}/Modele/${aktualnyZabytek.plik}`;
 
       // Jeśli ten sam model jest już załadowany na ekranie, po prostu schowaj przycisk
       if (viewer.getAttribute('src') === docelowyUrl && viewer.loaded) {
@@ -239,7 +239,7 @@
       }
 
       if (zabytek.poster) {
-        posterOverlay.style.backgroundImage = `url('${BAZA_URL}/${zabytek.poster}')`;
+        posterOverlay.style.backgroundImage = `url('${BAZA_URL}/Postery/${zabytek.poster}')`;
       } else {
         posterOverlay.style.backgroundImage = "none";
       }
