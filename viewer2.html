@@ -77,6 +77,57 @@
       .viewer-section { height: 52%; }
       .sidebar { width: 100%; height: 48%; border-left: none; border-top: 1px solid #3f3f46; }
     }
+	/* Pasek narzędzi pomiarowych na dole okna 3D */
+.measure-toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(24, 24, 27, 0.85);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #3f3f46;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.measure-btn {
+  background-color: #27272a;
+  color: #f4f4f5;
+  border: 1px solid #52525b;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.measure-btn:hover { background-color: #3f3f46; }
+.measure-btn.active {
+  background-color: #b45309;
+  border-color: #d97706;
+  color: #fff;
+}
+
+.measure-result {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* Wizualne punkty pomiarowe na powierzchni modelu (hotspoty) */
+.measure-point {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
@@ -97,6 +148,11 @@
         shadow-intensity="1" 
         alt="Model 3D zabytku">
       </model-viewer>
+	  <div class="measure-toolbar">
+  <button id="toggle-measure" type="button" class="measure-btn">Włącz miarkę</button>
+  <button id="clear-measure" type="button" class="measure-btn" style="display: none;">Wyczyść pomiar</button>
+  <span id="measure-output" class="measure-result"></span>
+</div>
     </div>
 
     <div class="sidebar">
@@ -268,6 +324,101 @@
         statusBox.textContent = `Brak zdefiniowanego okresu: ?okres=${wybranyOkres}`;
       }
     });
+	
+	const toggleMeasureBtn = document.getElementById('toggle-measure');
+const clearMeasureBtn = document.getElementById('clear-measure');
+const measureOutput = document.getElementById('measure-output');
+
+let trybMiarki = false;
+let punktyPomiaru = []; // Przechowuje max 2 punkty: [{x, y, z}, {x, y, z}]
+
+// Włączanie / wyłączanie trybu miarki
+toggleMeasureBtn.addEventListener('click', () => {
+  trybMiarki = !trybMiarki;
+  toggleMeasureBtn.classList.toggle('active', trybMiarki);
+
+  if (trybMiarki) {
+    toggleMeasureBtn.textContent = "Wyłącz miarkę";
+    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+    clearMeasureBtn.style.display = "inline-block";
+    // Zablokuj obracanie modelu, by kliknięcie trafiało w punkt
+    viewer.removeAttribute('camera-controls');
+  } else {
+    toggleMeasureBtn.textContent = "Włącz miarkę";
+    measureOutput.textContent = "";
+    clearMeasureBtn.style.display = "none";
+    // Przywróć swobodne obracanie
+    viewer.setAttribute('camera-controls', '');
+    usunZnaczniki();
+  }
+});
+
+// Czyszczenie bieżącego pomiaru
+clearMeasureBtn.addEventListener('click', () => {
+  usunZnaczniki();
+  if (trybMiarki) {
+    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+  }
+});
+
+function usunZnaczniki() {
+  punktyPomiaru = [];
+  const p1 = document.getElementById('hotspot-pt-1');
+  const p2 = document.getElementById('hotspot-pt-2');
+  if (p1) p1.remove();
+  if (p2) p2.remove();
+}
+
+// Obsługa kliknięcia na powierzchni modelu
+viewer.addEventListener('click', (event) => {
+  if (!trybMiarki || punktyPomiaru.length >= 2) return;
+
+  const rect = viewer.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // Pobranie pozycji 3D w metrach z modelu
+  const hit = viewer.positionAndNormalFromPoint(x, y);
+  if (!hit) return; // Kliknięto w puste tło, poza modelem
+
+  const punkt = hit.position;
+  punktyPomiaru.push(punkt);
+
+  // Dodaj wizualny znacznik na modelu
+  const numer = punktyPomiaru.length;
+  const dot = document.createElement('div');
+  dot.id = `hotspot-pt-${numer}`;
+  dot.slot = `hotspot-point-${numer}`;
+  dot.dataset.position = `${punkt.x} ${punkt.y} ${punkt.z}`;
+  dot.className = 'measure-point';
+  viewer.appendChild(dot);
+
+  if (punktyPomiaru.length === 1) {
+    measureOutput.textContent = "Kliknij 2. punkt na modelu...";
+  } else if (punktyPomiaru.length === 2) {
+    // Obliczenie dystansu 3D
+    const p1 = punktyPomiaru[0];
+    const p2 = punktyPomiaru[1];
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const dz = p2.z - p1.z;
+    
+    // Dystans w metrach
+    const dystansM = Math.sqrt(dx * dx + dy * dy + dz * dz);
+    const dystansCm = (dystansM * 100).toFixed(2);
+    const dystansMm = (dystansM * 1000).toFixed(1);
+
+    measureOutput.textContent = `Odległość: ${dystansCm} cm (${dystansMm} mm)`;
+  }
+});
+
+// Usunięcie znaczników po zmianie zabytku na inny
+viewer.addEventListener('load', () => {
+  usunZnaczniki();
+  if (trybMiarki) {
+    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+  }
+});
   </script>
 
 </body>
