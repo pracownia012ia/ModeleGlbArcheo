@@ -142,6 +142,7 @@
   </div>
 
   <script>
+
     // 1. Ścieżka do folderu z modelami:
     const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 
@@ -249,7 +250,7 @@
         posterOverlay.style.display = "block";
         loadButton.style.display = "block";
         loadButton.style.backgroundColor = "rgba(24, 24, 27, 0.92)";
-        loadButton.textContent = `Załaduj model 3D: \${zabytek.tytul}`;
+        loadButton.textContent = `Załaduj model 3D: ${zabytek.tytul}`;
       } else {
         // Przy kliknięciu w przycisk z listy od razu pobieramy wybrany model
         rozpocznijPobieranieModelu();
@@ -264,7 +265,7 @@
     // Aktualizacja procentów i ukrywanie napisu po pobraniu
     viewer.addEventListener('progress', (event) => {
       const procent = Math.round(event.detail.totalProgress * 100);
-      loadButton.textContent = `Trwa pobieranie modelu... \${procent}%`;
+      loadButton.textContent = `Trwa pobieranie modelu... ${procent}%`;
       if (procent >= 100) {
         setTimeout(() => {
           loadButton.style.display = "none";
@@ -288,15 +289,20 @@
 
     // Inicjalizacja listy przycisków na starcie
     if (listaZabytkow.length > 0) {
-      document.getElementById('liczba-zabytkow').textContent = `Zabytki w tym okresie (\${listaZabytkow.length}):`;
+      document.getElementById('liczba-zabytkow').textContent = `Zabytki w tym okresie (${listaZabytkow.length}):`;
       listaZabytkow.forEach((zabytek, index) => {
         const btn = document.createElement('button');
         btn.className = 'artifact-btn';
-        btn.textContent = `${index + 1}.${zabytek.tytul}`;
+        btn.textContent = `${index + 1}. ${zabytek.tytul}`;
         btn.onclick = () => wybierzZabytek(index, true);
         buttonsContainer.appendChild(btn);
       });
       wybierzZabytek(0, false);
     } else {
       document.getElementById('info-tytul').textContent = "Nie znaleziono okresu w bazie";
-      loadButton.textContent = `Brak zdefiniowanego okresu: ?okres=\${wybr
+      loadButton.textContent = `Brak zdefiniowanego okresu: ?okres=${wybranyOkres}`;
+    }
+  </script>
+
+</body>
+</html>
