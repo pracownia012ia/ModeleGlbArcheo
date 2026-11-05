@@ -22,11 +22,12 @@
 
     model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
 
-    /* Ekran startowy (Poster) i nakładka ładowania */
-    #lazy-load-poster {
+    /* Nakładka plakatu i przycisku kontrolowana w 100% przez nasz kod */
+    #poster-overlay {
       position: absolute; inset: 0;
       background-size: contain; background-repeat: no-repeat; background-position: center;
-      background-color: #18181b;
+      background-color: rgba(24, 24, 27, 0.65);
+      z-index: 15; pointer-events: none;
     }
     #button-load {
       background-color: rgba(24, 24, 27, 0.92); color: #fff; cursor: pointer;
@@ -86,12 +87,13 @@
 
   <div class="layout">
     <div class="viewer-section">
-      <!-- Przycisk jest teraz poza slotem poster, co daje pełną kontrolę przy zmianie modeli -->
-      <div id="button-load">Załaduj model 3D</div>
+      <!-- Własna warstwa plakatu i przycisku - niezależna od błędów wewnętrznych model-viewer -->
+      <div id="poster-overlay"></div>
+      <button id="button-load" type="button">Załaduj model 3D</button>
 
+      <!-- Usunięto problematyczne reveal="manual" - model nie ładuje się, bo nie ma przypisanego src na starcie -->
       <model-viewer 
         id="viewer" 
-        reveal="manual" 
         exposure="1" 
         camera-controls 
         touch-action="pan-y" 
@@ -99,7 +101,6 @@
         tone-mapping="aces" 
         shadow-intensity="1" 
         alt="Model 3D zabytku">
-        <div id="lazy-load-poster" slot="poster"></div>
       </model-viewer>
     </div>
 
@@ -142,11 +143,7 @@
 
   <script>
     // 1. Ścieżka do folderu z modelami:
-    const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev"; 
-    
-    // Jeśli chcesz, aby KAŻDY zabytek po przełączeniu wymagał ponownego kliknięcia "Załaduj model 3D", 
-    // zmień poniższą wartość na true. Przy false klikasz tylko raz na start, a kolejne ładują się od razu:
-    const WYMAGAJ_KLIKNIECIA_ZA_KAZDYM_RAZEM = true;
+    const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 
     // 2. Baza zabytków podzielona na okresy:
     const BAZA_OKRESOW = {
@@ -192,15 +189,36 @@
 
     const viewer = document.getElementById('viewer');
     const loadButton = document.getElementById('button-load');
-    const posterDiv = document.getElementById('lazy-load-poster');
+    const posterOverlay = document.getElementById('poster-overlay');
     const buttonsContainer = document.getElementById('artifact-buttons');
     
-    let aktualnyPlik = "";
+    let aktualnyZabytek = null;
     let czyOdblokowanoOkno = false;
+
+    function rozpocznijPobieranieModelu() {
+      if (!aktualnyZabytek) return;
+      czyOdblokowanoOkno = true;
+      const docelowyUrl = `${BAZA_URL}/${aktualnyZabytek.plik}`;
+
+      // Jeśli ten sam model jest już załadowany na ekranie, po prostu schowaj przycisk
+      if (viewer.getAttribute('src') === docelowyUrl && viewer.loaded) {
+        loadButton.style.display = "none";
+        posterOverlay.style.display = "none";
+        return;
+      }
+
+      loadButton.style.display = "block";
+      loadButton.style.backgroundColor = "rgba(24, 24, 27, 0.92)";
+      loadButton.textContent = "Trwa pobieranie modelu... 0%";
+      
+      // Przypisanie atrybutu src w tym miejscu fizycznie rozpoczyna pobieranie pliku .glb
+      viewer.setAttribute('src', docelowyUrl);
+    }
 
     function wybierzZabytek(index, czyKliknietoZListy = false) {
       const zabytek = listaZabytkow[index];
       if (!zabytek) return;
+      aktualnyZabytek = zabytek;
 
       document.querySelectorAll('.artifact-btn').forEach((btn, i) => {
         btn.classList.toggle('active', i === index);
@@ -220,68 +238,65 @@
         sekcjaLit.style.display = "none";
       }
 
-      aktualnyPlik = zabytek.plik;
-
       if (zabytek.poster) {
-        posterDiv.style.backgroundImage = `url('${BAZA_URL}/Postery/${zabytek.poster}')`;
+        posterOverlay.style.backgroundImage = `url('${BAZA_URL}/${zabytek.poster}')`;
       } else {
-        posterDiv.style.backgroundImage = "none";
+        posterOverlay.style.backgroundImage = "none";
       }
 
-      // KLUCZOWA POPRAWKA:
-      if (WYMAGAJ_KLIKNIECIA_ZA_KAZDYM_RAZEM || (!czyOdblokowanoOkno && !czyKliknietoZListy)) {
-        // Tryb oszczędzania: czekamy na kliknięcie przycisku
-        viewer.reveal = "manual";
-        viewer.showPoster();
-        viewer.src = `${BAZA_URL}/Modele/${zabytek.plik}`;
+      // Na starcie strony czekamy na kliknięcie (oszczędność transferu)
+      if (!czyOdblokowanoOkno && !czyKliknietoZListy) {
+        posterOverlay.style.display = "block";
         loadButton.style.display = "block";
         loadButton.style.backgroundColor = "rgba(24, 24, 27, 0.92)";
-        loadButton.textContent = `Załaduj model 3D: ${zabytek.tytul}`;
+        loadButton.textContent = `Załaduj model 3D: \${zabytek.tytul}`;
       } else {
-        // Użytkownik już wszedł w interakcję - od razu ładujemy wybrany model bez wieszania klatki
-        czyOdblokowanoOkno = true;
-        viewer.reveal = "auto";
-        loadButton.style.display = "block";
-        loadButton.style.backgroundColor = "rgba(24, 24, 27, 0.92)";
-        loadButton.textContent = "Trwa pobieranie modelu...";
-        viewer.src = `${BAZA_URL}/Modele/${zabytek.plik}`;
-        viewer.dismissPoster();
+        // Przy kliknięciu w przycisk z listy od razu pobieramy wybrany model
+        rozpocznijPobieranieModelu();
       }
     }
 
-    if (listaZabytkow.length > 0) {
-      document.getElementById('liczba-zabytkow').textContent = `Zabytki w tym okresie (${listaZabytkow.length}):`;
-      listaZabytkow.forEach((zabytek, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'artifact-btn';
-        btn.textContent = `${index + 1}. ${zabytek.tytul}`;
-        btn.onclick = () => wybierzZabytek(index, true);
-        buttonsContainer.appendChild(btn);
-      });
-      wybierzZabytek(0, false); // Na starcie strony NIE ładujemy pliku automatycznie
-    } else {
-      document.getElementById('info-tytul').textContent = "Nie znaleziono okresu w bazie";
-      loadButton.textContent = `Brak zdefiniowanego okresu: ?okres=${wybranyOkres}`;
-    }
-
+    // Kliknięcie środkowego przycisku "Załaduj model 3D"
     loadButton.addEventListener('click', () => {
-      if (!aktualnyPlik) return;
-      czyOdblokowanoOkno = true;
-      viewer.reveal = "auto";
-      loadButton.textContent = "Trwa pobieranie modelu...";
-      viewer.dismissPoster();
+      rozpocznijPobieranieModelu();
     });
 
+    // Aktualizacja procentów i ukrywanie napisu po pobraniu
+    viewer.addEventListener('progress', (event) => {
+      const procent = Math.round(event.detail.totalProgress * 100);
+      loadButton.textContent = `Trwa pobieranie modelu... \${procent}%`;
+      if (procent >= 100) {
+        setTimeout(() => {
+          loadButton.style.display = "none";
+          posterOverlay.style.display = "none";
+        }, 150);
+      }
+    });
+
+    // Główne zdarzenie zakończenia wczytywania sceny 3D
     viewer.addEventListener('load', () => {
       loadButton.style.display = "none";
+      posterOverlay.style.display = "none";
     });
 
+    // Obsługa błędu (np. literówka w nazwie pliku .glb)
     viewer.addEventListener('error', () => {
       loadButton.style.display = "block";
       loadButton.style.backgroundColor = "#8b0000";
-      loadButton.textContent = `Błąd 404: Nie znaleziono pliku ${BAZA_URL}/${aktualnyPlik}`;
+      loadButton.textContent = `Błąd 404: Nie znaleziono pliku ${BAZA_URL}/${aktualnyZabytek ? aktualnyZabytek.plik : ''}`;
     });
-  </script>
 
-</body>
-</html>
+    // Inicjalizacja listy przycisków na starcie
+    if (listaZabytkow.length > 0) {
+      document.getElementById('liczba-zabytkow').textContent = `Zabytki w tym okresie (\${listaZabytkow.length}):`;
+      listaZabytkow.forEach((zabytek, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'artifact-btn';
+        btn.textContent = `${index + 1}.${zabytek.tytul}`;
+        btn.onclick = () => wybierzZabytek(index, true);
+        buttonsContainer.appendChild(btn);
+      });
+      wybierzZabytek(0, false);
+    } else {
+      document.getElementById('info-tytul').textContent = "Nie znaleziono okresu w bazie";
+      loadButton.textContent = `Brak zdefiniowanego okresu: ?okres=\${wybr
