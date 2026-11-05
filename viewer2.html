@@ -139,7 +139,7 @@
 
     // 2. Baza zabytków podzielona na okresy:
     const BAZA_OKRESOW = {
-      "wczesne_zelazo": [
+      "wczesne zelazo": [
         {
           tytul: "Naczynie pomorskie",
           plik: "NaczyniePomorskieBlend2ShaderrMiarka2.glb",
@@ -176,7 +176,7 @@
     };
 
     const params = new URLSearchParams(window.location.search);
-    const wybranyOkres = params.get('okres') || "wczesne_zelazo";
+    const wybranyOkres = params.get('okres') || "wczesne zelazo";
     const listaZabytkow = BAZA_OKRESOW[wybranyOkres] || [];
 
     const viewer = document.getElementById('viewer');
