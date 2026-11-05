@@ -149,10 +149,12 @@
         alt="Model 3D zabytku">
       </model-viewer>
 	  <div class="measure-toolbar">
+	  <button id="fullscreen-btn" type="button" class="measure-btn" title="Pełny ekran">⛶ Pełny ekran</button>
   <button id="toggle-measure" type="button" class="measure-btn">Włącz miarkę</button>
   <button id="clear-measure" type="button" class="measure-btn" style="display: none;">Wyczyść pomiar</button>
   <span id="measure-output" class="measure-result"></span>
 </div>
+
     </div>
 
     <div class="sidebar">
@@ -419,6 +421,31 @@ viewer.addEventListener('load', () => {
   usunZnaczniki();
   if (trybMiarki) {
     measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+  }
+});
+
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+fullscreenBtn.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    // Wejście w tryb pełnoekranowy (cały widok strony)
+    viewer.requestFullscreen().catch((err) => {
+      console.warn(`Błąd wejścia w tryb pełnoekranowy: ${err.message}`);
+    });
+  } else {
+    // Wyjście z trybu pełnoekranowego
+    document.exitFullscreen();
+  }
+});
+
+// Automatyczna zmiana podpisu przycisku przy wejściu/wyjściu (np. klawiszem ESC)
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    fullscreenBtn.textContent = "✕ Zamknij pełny ekran";
+    fullscreenBtn.classList.add('active');
+  } else {
+    fullscreenBtn.textContent = "⛶ Pełny ekran";
+    fullscreenBtn.classList.remove('active');
   }
 });
   </script>
