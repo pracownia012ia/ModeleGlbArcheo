@@ -51,9 +51,9 @@
       background-color: #27272a; color: #e4e4e7; border: 1px solid #3f3f46;
       padding: 6px 11px; border-radius: 6px; font-size: 12px; cursor: pointer;
       transition: all 0.15s; text-align: left;
-	  btn.style.backgroundSize = "cover";
-		btn.style.backgroundPosition = "center";
-		btn.style.backgroundRepeat = "no-repeat";
+	  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
     }
     .artifact-btn:hover { background-color: #3f3f46; }
     .artifact-btn.active {
@@ -285,7 +285,7 @@
       }
 
       const docelowyUrl = `${BAZA_URL}/Modele/${zabytek.plik}`;
-	  const docelowyPoster = '${BAZA_URL}/Postery/${zabytek.poster}';
+	  const docelowyPoster = `${BAZA_URL}/Postery/${zabytek.poster}`;
 
       // Jeśli kliknięto ponownie ten sam zabytek, który już jest na ekranie, nic nie rób
       if (viewer.src && viewer.src.endsWith(zabytek.plik) && viewer.loaded) {
@@ -442,7 +442,7 @@ viewer.addEventListener('load', () => {
 
 //------------------------------------ fullscreen
 
-const viewerSection = document.querySelector(".viewer-section');
+const viewerSection = document.querySelector('.viewer-section');
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 
 fullscreenBtn.addEventListener('click', () => {
