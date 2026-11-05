@@ -44,21 +44,60 @@
       font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
       color: #a1a1aa; margin-bottom: 8px; font-weight: 600;
     }
-    .artifact-list {
-      display: flex; flex-wrap: wrap; gap: 6px; max-height: 125px; overflow-y: auto;
-    }
-    .artifact-btn {
-      background-color: #27272a; color: #e4e4e7; border: 1px solid #3f3f46;
-      padding: 6px 11px; border-radius: 6px; font-size: 12px; cursor: pointer;
-      transition: all 0.15s; text-align: left;
-	  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-    }
-    .artifact-btn:hover { background-color: #3f3f46; }
-    .artifact-btn.active {
-      background-color: #b45309; color: #fff; border-color: #d97706; font-weight: 600;
-    }
+    /* Lista przycisków jako elastyczna siatka kafelków */
+.artifact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+/* Pojedynczy kafelek: tekst na górze, miniaturka pod nim */
+.artifact-btn {
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.artifact-btn:hover {
+  background-color: #323238;
+  border-color: #71717a;
+}
+
+.artifact-btn.active {
+  border-color: #fbbf24;
+  background-color: #2d261a;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+/* Tekst u góry kafelka */
+.artifact-btn-title {
+  color: #f4f4f5;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.25;
+  width: 100%;
+  word-break: break-word;
+}
+
+/* Zdjęcie (poster) pod tekstem */
+.artifact-btn-img {
+  width: 100%;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
     .info-panel { padding: 18px 16px; overflow-y: auto; flex: 1; }
     .artifact-main-title {
@@ -330,9 +369,26 @@
         listaZabytkow.forEach((zabytek, index) => {
           const btn = document.createElement('button');
           btn.className = 'artifact-btn';
-          btn.textContent = `${index + 1}. ${zabytek.tytul}`;
+          btn.type = 'button';
           btn.onclick = () => wybierzZabytek(index);
-		  btn.style.backgroundImage = `url('${BAZA_URL}/Postery/${zabytek.poster}')`;
+		  // 1. Tekst u góry
+          const title = document.createElement('span');
+          title.className = 'artifact-btn-title';
+          title.textContent = `${index + 1}. ${zabytek.tytul}`;
+
+          // 2. Ikonka / zdjęcie pod tekstem
+          const img = document.createElement('img');
+          img.className = 'artifact-btn-img';
+          img.alt = zabytek.tytul;
+          // Jeśli zabytek ma zdefiniowany poster, pobierz go z R2; jeśli nie - daj pusty obrys
+          if (zabytek.poster) {
+            img.src = `${BAZA_URL}/Postery/${zabytek.poster}`;
+          }
+
+          // Wstawiamy najpierw tekst, a potem zdjęcie:
+          btn.appendChild(title);
+          btn.appendChild(img);
+
           buttonsContainer.appendChild(btn);
         });
         // Automatycznie ładuje pierwszy zabytek od razu po otwarciu strony
