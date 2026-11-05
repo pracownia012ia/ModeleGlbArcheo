@@ -128,6 +128,22 @@
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
   pointer-events: none;
 }
+
+/* Zapewnia poprawne wyświetlanie paska i modelu na pełnym ekranie */
+.viewer-section:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #18181b;
+}
+
+/* Wersja pod przeglądarki oparte na Safari/WebKit */
+.viewer-section:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #18181b;
+}
   </style>
 </head>
 <body>
@@ -424,12 +440,15 @@ viewer.addEventListener('load', () => {
   }
 });
 
+//------------------------------------ fullscreen
+
+const viewerSection = document.querySelector(".viewer-section');
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 
 fullscreenBtn.addEventListener('click', () => {
   if (!document.fullscreenElement) {
     // Wejście w tryb pełnoekranowy (cały widok strony)
-    viewer.requestFullscreen().catch((err) => {
+    viewerSection.requestFullscreen().catch((err) => {
       console.warn(`Błąd wejścia w tryb pełnoekranowy: ${err.message}`);
     });
   } else {
