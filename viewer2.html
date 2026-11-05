@@ -51,6 +51,9 @@
       background-color: #27272a; color: #e4e4e7; border: 1px solid #3f3f46;
       padding: 6px 11px; border-radius: 6px; font-size: 12px; cursor: pointer;
       transition: all 0.15s; text-align: left;
+	  btn.style.backgroundSize = "cover";
+		btn.style.backgroundPosition = "center";
+		btn.style.backgroundRepeat = "no-repeat";
     }
     .artifact-btn:hover { background-color: #3f3f46; }
     .artifact-btn.active {
@@ -255,7 +258,7 @@
           btn.className = 'artifact-btn';
           btn.textContent = `${index + 1}. ${zabytek.tytul}`;
           btn.onclick = () => wybierzZabytek(index);
-		  btn.style.background-image = '${BAZA_URL}/Postery/${zabytek.poster}';
+		  btn.style.backgroundImage = `url('${BAZA_URL}/Postery/${zabytek.poster}')`;
           buttonsContainer.appendChild(btn);
         });
         // Automatycznie ładuje pierwszy zabytek od razu po otwarciu strony
