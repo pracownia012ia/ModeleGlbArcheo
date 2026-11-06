@@ -202,7 +202,8 @@
         touch-action="pan-y" 
         auto-rotate 
         tone-mapping="aces" 
-        shadow-intensity="1" 
+        shadow-intensity="1"
+		max-camera-orbit="auto auto 400%"
         alt="Model 3D zabytku">
       </model-viewer>
       
@@ -440,14 +441,20 @@
     }
 
     // Wykrywanie kliknięcia vs przeciągnięcia (żeby można było obracać przy mierzeniu)
-    viewer.addEventListener('pointerdown', (e) => { pozStartX = e.clientX; pozStartY = e.clientY; });
+    viewer.addEventListener('pointerdown', (e) => { 
+	// Zapobiega aktywacji wewnętrznych skrótów kamery (np. centrowania na kliknięcie)
+		if (trybMiarki) {  e.stopPropagation(); }
+  
+  pozStartX = e.clientX; pozStartY = e.clientY; };
     
     viewer.addEventListener('pointerup', (e) => {
       if (!trybMiarki || punktyPomiaru.length >= 2) return;
       
       // Jeśli użytkownik przesunął mysz o więcej niż 6px, to znaczy że obracał model - nie stawiaj punktu
       if (Math.abs(e.clientX - pozStartX) > 6 || Math.abs(e.clientY - pozStartY) > 6) return;
-
+		
+	  e.stopPropagation();
+      e.preventDefault();
       const rect = viewer.getBoundingClientRect();
       const hit = viewer.positionAndNormalFromPoint(e.clientX - rect.left, e.clientY - rect.top);
       if (!hit) return;
