@@ -454,7 +454,7 @@
 
       const punkt = hit.position;
       punktyPomiaru.push(punkt);
-
+	viewer.cameraTarget = `${punkt.x} ${punkt.y} ${punkt.z}`;
       const numer = punktyPomiaru.length;
       const dot = document.createElement('div');
       dot.id = `hotspot-pt-${numer}`;
