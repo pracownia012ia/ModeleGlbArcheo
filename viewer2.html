@@ -506,19 +506,6 @@
 	
 	let domyslnyTarget = "auto auto auto";
 
-// Po załadowaniu modelu zapamiętujemy jego naturalny środek
-viewer.addEventListener('load', () => {
-  domyslnyTarget = viewer.getCameraTarget().toString();
-});
-
-// Zamiast walczyć ze zdarzeniami myszy, blokujemy zmianę celu kamery:
-viewer.addEventListener('camera-change', (e) => {
-  // Jeśli zmiana nastąpiła w wyniku kliknięcia (user-interaction), a nie płynnego obrotu
-  if (e.detail.source === 'user-interaction') {
-    // Wymuszamy, by środek obrotu pozostał dokładnie na środku zabytku
-    viewer.cameraTarget = domyslnyTarget;
-  }
-});
   </script>
 
 </body>
