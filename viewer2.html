@@ -3,193 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Katalog Zabytków 3D</title>
+  <title>Katalog Zabytków 3D - UMCS</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <style>
+    /* ZMIENNE KOLORYSTYCZNE - Domyślnie Jasny Motyw (Kolorystyka UMCS) */
+    :root {
+      --bg-main: #ffffff;
+      --bg-sidebar: #f8f9fa;
+      --bg-panel: #ffffff;
+      --bg-viewer-grad: radial-gradient(circle, #e5e7eb 0%, #d1d5db 100%);
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --accent: #00457d; /* Granat UMCS */
+      --accent-hover: #00335c;
+      --accent-glow: rgba(0, 69, 125, 0.4);
+      --border: #d1d5db;
+      --btn-bg: #ffffff;
+      --btn-bg-hover: #f3f4f6;
+      --btn-text: #1f2937;
+      --overlay-bg: rgba(255, 255, 255, 0.95);
+      --measure-pt: #00457d;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Klasa dla Ciemnego Motywu (przełączana przyciskiem) */
+    body.dark-theme {
+      --bg-main: #18181b;
+      --bg-sidebar: #202024;
+      --bg-panel: #1c1c1f;
+      --bg-viewer-grad: radial-gradient(circle, #27272a 0%, #18181b 100%);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #fbbf24; /* Złoty / Bursztynowy */
+      --accent-hover: #d97706;
+      --accent-glow: rgba(251, 191, 36, 0.5);
+      --border: #3f3f46;
+      --btn-bg: #27272a;
+      --btn-bg-hover: #3f3f46;
+      --btn-text: #ffffff;
+      --overlay-bg: rgba(24, 24, 27, 0.85);
+      --measure-pt: #ef4444;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
     * { box-sizing: border-box; }
     body, html {
       margin: 0; padding: 0; width: 100%; height: 100%;
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background-color: #18181b; color: #f4f4f5; overflow: hidden;
+      background-color: var(--bg-main); color: var(--text-main); overflow: hidden;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .layout { display: flex; width: 100%; height: 100%; }
+    .layout { display: flex; width: 100%; height: 100%; transition: margin-right 0.3s ease; }
+
+    /* Ukrywanie panelu bocznego */
+    .layout.sidebar-collapsed .sidebar { margin-right: -380px; }
 
     .viewer-section {
       flex: 1; position: relative; height: 100%;
-      background: radial-gradient(circle, #27272a 0%, #18181b 100%);
+      background: var(--bg-viewer-grad);
+      transition: background 0.3s;
     }
 
     model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
 
-    /* Okienko postępu ładowania na środku ekranu */
+    /* Pływające przyciski górne (Motyw i Zwijanie) */
+    .ui-btn {
+      position: absolute; z-index: 10;
+      background-color: var(--overlay-bg); color: var(--text-main);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 8px 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+      box-shadow: var(--shadow); transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ui-btn:hover { background-color: var(--btn-bg-hover); border-color: var(--accent); }
+    
+    #theme-toggle-btn { top: 16px; left: 16px; }
+    #toggle-sidebar-btn { top: 16px; right: 16px; }
+
+    /* Komunikat ładowania na środku */
     #status-box {
-      background-color: rgba(24, 24, 27, 0.92); color: #fff;
-      border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.25);
+      background-color: var(--overlay-bg); color: var(--text-main);
+      border-radius: 8px; border: 1px solid var(--border);
       padding: 12px 22px; font-weight: 600; font-size: 14px;
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      z-index: 20; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      text-align: center; pointer-events: none;
+      z-index: 20; box-shadow: var(--shadow); text-align: center; pointer-events: none;
     }
 
     /* Prawy panel boczny */
     .sidebar {
-      width: 380px; height: 100%; background-color: #202024;
-      border-left: 1px solid #3f3f46; display: flex; flex-direction: column;
+      width: 380px; height: 100%; background-color: var(--bg-sidebar);
+      border-left: 1px solid var(--border); display: flex; flex-direction: column;
+      transition: margin-right 0.3s ease, margin-bottom 0.3s ease, background-color 0.3s;
     }
     .selector-header {
-      padding: 14px 16px; border-bottom: 1px solid #3f3f46; background-color: #1c1c1f;
+      padding: 14px 16px; border-bottom: 1px solid var(--border); background-color: var(--bg-panel);
     }
     .selector-title {
       font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
-      color: #a1a1aa; margin-bottom: 8px; font-weight: 600;
+      color: var(--text-muted); margin-bottom: 8px; font-weight: 700;
     }
-    /* Lista przycisków jako elastyczna siatka kafelków */
-.artifact-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-  gap: 8px;
-  max-height: 160px;
-  overflow-y: auto;
-}
 
-/* Pojedynczy kafelek: tekst na górze, miniaturka pod nim */
-.artifact-btn {
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
-  border-radius: 6px;
-  padding: 6px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
+    /* Siatka Kafelków (Tekst na górze, obrazek na dole) */
+    .artifact-list {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+      gap: 8px; max-height: 160px; overflow-y: auto;
+    }
+    .artifact-btn {
+      background-color: var(--btn-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 6px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .artifact-btn:hover { background-color: var(--btn-bg-hover); border-color: var(--text-muted); }
+    .artifact-btn.active {
+      border-color: var(--accent); background-color: var(--btn-bg);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+    .artifact-btn-title {
+      color: var(--text-main); font-size: 11px; font-weight: 700;
+      text-align: center; line-height: 1.25; width: 100%; word-break: break-word;
+    }
+    .artifact-btn-img {
+      width: 100%; height: 65px; object-fit: cover; border-radius: 4px;
+      background-color: var(--bg-main); border: 1px solid var(--border);
+    }
 
-.artifact-btn:hover {
-  background-color: #323238;
-  border-color: #71717a;
-}
-
-.artifact-btn.active {
-  border-color: #fbbf24;
-  background-color: #2d261a;
-  box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
-}
-
-/* Tekst u góry kafelka */
-.artifact-btn-title {
-  color: #f4f4f5;
-  font-size: 11px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.25;
-  width: 100%;
-  word-break: break-word;
-}
-
-/* Zdjęcie (poster) pod tekstem */
-.artifact-btn-img {
-  width: 100%;
-  height: 65px;
-  object-fit: cover;
-  border-radius: 4px;
-  background-color: #18181b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
+    /* Karta informacyjna */
     .info-panel { padding: 18px 16px; overflow-y: auto; flex: 1; }
     .artifact-main-title {
-      margin: 0 0 16px 0; font-size: 18px; color: #ffffff;
-      border-bottom: 1px solid #3f3f46; padding-bottom: 10px;
+      margin: 0 0 16px 0; font-size: 18px; color: var(--text-main);
+      border-bottom: 1px solid var(--border); padding-bottom: 10px;
     }
     .meta-item { margin-bottom: 14px; }
     .meta-label {
       font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
-      color: #fbbf24; font-weight: 600; margin-bottom: 3px;
+      color: var(--accent); font-weight: 700; margin-bottom: 3px;
     }
-    .meta-value { font-size: 13.5px; line-height: 1.45; color: #e4e4e7; margin: 0; }
+    .meta-value { font-size: 13.5px; line-height: 1.45; color: var(--text-main); margin: 0; }
+
+    /* Pasek narzędzi pomiarowych i fullscreen */
+    .measure-toolbar {
+      position: absolute; bottom: 16px; left: 16px; z-index: 10;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background-color: var(--overlay-bg); padding: 8px 12px;
+      border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .measure-btn {
+      background-color: var(--btn-bg); color: var(--btn-text);
+      border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .measure-btn:hover { background-color: var(--btn-bg-hover); border-color: var(--accent); }
+    .measure-btn.active { background-color: var(--accent); border-color: var(--accent-hover); color: #fff; }
+    .measure-result { font-size: 13px; font-weight: 700; color: var(--accent); }
+
+    /* Hotspoty (kropki pomiarowe) */
+    .measure-point {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid #ffffff; background-color: var(--measure-pt);
+      box-shadow: 0 0 8px var(--accent-glow); pointer-events: none;
+    }
+
+    /* Pełny ekran */
+    .viewer-section:fullscreen { width: 100vw; height: 100vh; position: relative; }
+    .viewer-section:-webkit-full-screen { width: 100vw; height: 100vh; position: relative; }
 
     @media (max-width: 768px) {
       .layout { flex-direction: column; }
+      .layout.sidebar-collapsed .sidebar { margin-right: 0; margin-bottom: -50%; }
       .viewer-section { height: 52%; }
-      .sidebar { width: 100%; height: 48%; border-left: none; border-top: 1px solid #3f3f46; }
+      .sidebar { width: 100%; height: 48%; border-left: none; border-top: 1px solid var(--border); }
     }
-	/* Pasek narzędzi pomiarowych na dole okna 3D */
-.measure-toolbar {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: rgba(24, 24, 27, 0.85);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #3f3f46;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.measure-btn {
-  background-color: #27272a;
-  color: #f4f4f5;
-  border: 1px solid #52525b;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.measure-btn:hover { background-color: #3f3f46; }
-.measure-btn.active {
-  background-color: #b45309;
-  border-color: #d97706;
-  color: #fff;
-}
-
-.measure-result {
-  font-size: 13px;
-  font-weight: 600;
-  color: #fbbf24;
-}
-
-/* Wizualne punkty pomiarowe na powierzchni modelu (hotspoty) */
-.measure-point {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-  background-color: #ef4444;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
-  pointer-events: none;
-}
-
-/* Zapewnia poprawne wyświetlanie paska i modelu na pełnym ekranie */
-.viewer-section:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  background-color: #18181b;
-}
-
-/* Wersja pod przeglądarki oparte na Safari/WebKit */
-.viewer-section:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  background-color: #18181b;
-}
   </style>
 </head>
 <body>
 
-  <div class="layout">
+  <div class="layout" id="main-layout">
     <div class="viewer-section">
-      <!-- Komunikat postępu ładowania -->
+      
+      <!-- Przycisk Zmiany Motywu -->
+      <button id="theme-toggle-btn" class="ui-btn" type="button" title="Zmień motyw">
+        🌙 Ciemny motyw
+      </button>
+
+      <!-- Przycisk Zwijania Paska -->
+      <button id="toggle-sidebar-btn" class="ui-btn" type="button" title="Zwiń / Rozwiń panel">
+        <span id="sidebar-icon">▶</span> <span id="sidebar-label">Zwiń informacje</span>
+      </button>
+
       <div id="status-box">Inicjalizacja widoku 3D...</div>
 
       <model-viewer 
@@ -203,12 +205,13 @@
         shadow-intensity="1" 
         alt="Model 3D zabytku">
       </model-viewer>
-	  <div class="measure-toolbar">
-	  <button id="fullscreen-btn" type="button" class="measure-btn" title="Pełny ekran">⛶ Pełny ekran</button>
-  <button id="toggle-measure" type="button" class="measure-btn">Włącz miarkę</button>
-  <button id="clear-measure" type="button" class="measure-btn" style="display: none;">Wyczyść pomiar</button>
-  <span id="measure-output" class="measure-result"></span>
-</div>
+      
+      <div class="measure-toolbar">
+        <button id="fullscreen-btn" type="button" class="measure-btn" title="Pełny ekran">⛶ Pełny ekran</button>
+        <button id="toggle-measure" type="button" class="measure-btn">Włącz miarkę</button>
+        <button id="clear-measure" type="button" class="measure-btn" style="display: none;">Wyczyść pomiar</button>
+        <span id="measure-output" class="measure-result"></span>
+      </div>
 
     </div>
 
@@ -220,31 +223,11 @@
 
       <div class="info-panel">
         <h2 class="artifact-main-title" id="info-tytul">Nazwa zabytku</h2>
-        
-        <div class="meta-item">
-          <div class="meta-label">Stanowisko</div>
-          <p class="meta-value" id="info-stanowisko">—</p>
-        </div>
-
-        <div class="meta-item">
-          <div class="meta-label">Opis zabytku / Datowanie / Kultura</div>
-          <p class="meta-value" id="info-opis">—</p>
-        </div>
-
-        <div class="meta-item">
-          <div class="meta-label">Rok i autor badań</div>
-          <p class="meta-value" id="info-badania">—</p>
-        </div>
-
-        <div class="meta-item">
-          <div class="meta-label">Miejsce przechowywania</div>
-          <p class="meta-value" id="info-miejsce">—</p>
-        </div>
-
-        <div class="meta-item" id="sekcja-literatura">
-          <div class="meta-label">Literatura</div>
-          <p class="meta-value" id="info-literatura">—</p>
-        </div>
+        <div class="meta-item"><div class="meta-label">Stanowisko</div><p class="meta-value" id="info-stanowisko">—</p></div>
+        <div class="meta-item"><div class="meta-label">Opis zabytku / Datowanie / Kultura</div><p class="meta-value" id="info-opis">—</p></div>
+        <div class="meta-item"><div class="meta-label">Rok i autor badań</div><p class="meta-value" id="info-badania">—</p></div>
+        <div class="meta-item"><div class="meta-label">Miejsce przechowywania</div><p class="meta-value" id="info-miejsce">—</p></div>
+        <div class="meta-item" id="sekcja-literatura"><div class="meta-label">Literatura</div><p class="meta-value" id="info-literatura">—</p></div>
       </div>
     </div>
   </div>
@@ -310,6 +293,38 @@
     const buttonsContainer = document.getElementById('artifact-buttons');
     let aktualnyZabytek = null;
 
+    // --- ZMIANA MOTYWU (Jasny / Ciemny) ---
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark-theme');
+      if (isDark) {
+        themeToggleBtn.innerHTML = "☀️ Jasny motyw";
+      } else {
+        themeToggleBtn.innerHTML = "🌙 Ciemny motyw";
+      }
+    });
+
+    // --- ZWIJANIE PANELU BOCZNEGO ---
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+    const layoutContainer = document.getElementById('main-layout');
+    const sidebarIcon = document.getElementById('sidebar-icon');
+    const sidebarLabel = document.getElementById('sidebar-label');
+
+    toggleSidebarBtn.addEventListener('click', () => {
+      const czyZwiniety = layoutContainer.classList.toggle('sidebar-collapsed');
+      if (czyZwiniety) {
+        sidebarIcon.textContent = "◀";
+        sidebarLabel.textContent = "Pokaż informacje";
+      } else {
+        sidebarIcon.textContent = "▶";
+        sidebarLabel.textContent = "Zwiń informacje";
+      }
+      setTimeout(() => {
+        if (typeof viewer.updateFraming === 'function') viewer.updateFraming();
+      }, 320);
+    });
+
+    // --- ŁADOWANIE MODELI I GENEROWANIE KAFELKÓW ---
     function wybierzZabytek(index) {
       const zabytek = listaZabytkow[index];
       if (!zabytek) return;
@@ -334,222 +349,146 @@
       }
 
       const docelowyUrl = `${BAZA_URL}/Modele/${zabytek.plik}`;
-	  const docelowyPoster = `${BAZA_URL}/Postery/${zabytek.poster}`;
-
-      // Jeśli kliknięto ponownie ten sam zabytek, który już jest na ekranie, nic nie rób
+      
       if (viewer.src && viewer.src.endsWith(zabytek.plik) && viewer.loaded) {
-        statusBox.style.display = "none";
-        return;
+        statusBox.style.display = "none"; return;
       }
 
-      // Pokaż pasek stanu i od razu rozpocznij pobieranie modelu
       statusBox.style.display = "block";
-      statusBox.style.backgroundColor = "rgba(24, 24, 27, 0.92)";
       statusBox.textContent = `Trwa pobieranie: ${zabytek.tytul} (0%)`;
+      if(zabytek.poster) viewer.poster = `${BAZA_URL}/Postery/${zabytek.poster}`;
       viewer.src = docelowyUrl;
     }
 
-    // Aktualizacja stanu procentowego
     viewer.addEventListener('progress', (event) => {
       const procent = Math.round(event.detail.totalProgress * 100);
-      if (aktualnyZabytek) {
-        statusBox.textContent = `Trwa pobieranie: ${aktualnyZabytek.tytul} (${procent}%)`;
-      }
-      if (procent >= 100) {
-        setTimeout(() => { statusBox.style.display = "none"; }, 200);
-      }
+      if (aktualnyZabytek) statusBox.textContent = `Trwa pobieranie: ${aktualnyZabytek.tytul} (${procent}%)`;
+      if (procent >= 100) setTimeout(() => { statusBox.style.display = "none"; }, 200);
     });
-
-    // Ukrycie komunikatu po pełnym załadowaniu modelu 3D
-    viewer.addEventListener('load', () => {
-      statusBox.style.display = "none";
-    });
-
-    // Diagnostyka błędu 404
+    viewer.addEventListener('load', () => { statusBox.style.display = "none"; });
     viewer.addEventListener('error', () => {
       statusBox.style.display = "block";
-      statusBox.style.backgroundColor = "#8b0000";
-      statusBox.textContent = `Błąd 404: Nie znaleziono pliku ${BAZA_URL}/Modele/${aktualnyZabytek ? aktualnyZabytek.plik : ''}`;
+      statusBox.textContent = `Błąd 404: Nie znaleziono pliku.`;
     });
 
-    // KLUCZOWE: Czekamy na pełne załadowanie silnika <model-viewer>, zanim wywołamy pierwszy model!
     customElements.whenDefined('model-viewer').then(() => {
       if (listaZabytkow.length > 0) {
         document.getElementById('liczba-zabytkow').textContent = `Zabytki w okresie (${wybranyOkres}) - (${listaZabytkow.length}):`;
         listaZabytkow.forEach((zabytek, index) => {
+          // Generowanie Kafelka
           const btn = document.createElement('button');
           btn.className = 'artifact-btn';
           btn.type = 'button';
           btn.onclick = () => wybierzZabytek(index);
-		  // 1. Tekst u góry
+
+          // 1. Tytuł
           const title = document.createElement('span');
           title.className = 'artifact-btn-title';
           title.textContent = `${index + 1}. ${zabytek.tytul}`;
 
-          // 2. Ikonka / zdjęcie pod tekstem
+          // 2. Miniaturka obrazkowa pod tytułem
           const img = document.createElement('img');
           img.className = 'artifact-btn-img';
           img.alt = zabytek.tytul;
-          // Jeśli zabytek ma zdefiniowany poster, pobierz go z R2; jeśli nie - daj pusty obrys
-          if (zabytek.poster) {
-            img.src = `${BAZA_URL}/Postery/${zabytek.poster}`;
-          }
+          if (zabytek.poster) img.src = `${BAZA_URL}/Postery/${zabytek.poster}`;
 
-          // Wstawiamy najpierw tekst, a potem zdjęcie:
           btn.appendChild(title);
           btn.appendChild(img);
-
           buttonsContainer.appendChild(btn);
         });
-        // Automatycznie ładuje pierwszy zabytek od razu po otwarciu strony
         wybierzZabytek(0);
-      } else {
-        document.getElementById('info-tytul').textContent = "Nie znaleziono okresu w bazie";
-        statusBox.textContent = `Brak zdefiniowanego okresu: ?okres=${wybranyOkres}`;
       }
     });
-	
-	const toggleMeasureBtn = document.getElementById('toggle-measure');
-const clearMeasureBtn = document.getElementById('clear-measure');
-const measureOutput = document.getElementById('measure-output');
 
-let trybMiarki = false;
-let punktyPomiaru = []; // Przechowuje max 2 punkty: [{x, y, z}, {x, y, z}]
+    // --- MIARKA Z OBSŁUGĄ OBRACANIA KAMERY ---
+    const toggleMeasureBtn = document.getElementById('toggle-measure');
+    const clearMeasureBtn = document.getElementById('clear-measure');
+    const measureOutput = document.getElementById('measure-output');
 
-// Włączanie / wyłączanie trybu miarki
-toggleMeasureBtn.addEventListener('click', () => {
-  trybMiarki = !trybMiarki;
-  toggleMeasureBtn.classList.toggle('active', trybMiarki);
+    let trybMiarki = false;
+    let punktyPomiaru = [];
+    let pozStartX = 0; let pozStartY = 0;
 
-  if (trybMiarki) {
-    toggleMeasureBtn.textContent = "Wyłącz miarkę";
-    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
-    clearMeasureBtn.style.display = "inline-block";
-    // Zablokuj obracanie modelu, by kliknięcie trafiało w punkt
-	viewer.autoRotate = false;
-  } else {
-    toggleMeasureBtn.textContent = "Włącz miarkę";
-    measureOutput.textContent = "";
-    clearMeasureBtn.style.display = "none";
-    // Przywróć swobodne obracanie
-	viewer.autoRotate = true;
-    usunZnaczniki();
-  }
-});
+    toggleMeasureBtn.addEventListener('click', () => {
+      trybMiarki = !trybMiarki;
+      toggleMeasureBtn.classList.toggle('active', trybMiarki);
 
-// Czyszczenie bieżącego pomiaru
-clearMeasureBtn.addEventListener('click', () => {
-  usunZnaczniki();
-  if (trybMiarki) {
-    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
-  }
-});
-
-function usunZnaczniki() {
-  punktyPomiaru = [];
-  const p1 = document.getElementById('hotspot-pt-1');
-  const p2 = document.getElementById('hotspot-pt-2');
-  if (p1) p1.remove();
-  if (p2) p2.remove();
-}
-
-// Obsługa kliknięcia na powierzchni modelu
-let pozycjaStartowaX = 0;
-let pozycjaStartowaY = 0;
-
-// Rejestrujemy moment naciśnięcia przycisku myszy / dotknięcia ekranu
-viewer.addEventListener('pointerdown', (event) => {
-  pozycjaStartowaX = event.clientX;
-  pozycjaStartowaY = event.clientY;
-});
-
-// Stawiamy punkt tylko wtedy, gdy użytkownik NIE przesuwał kamery
-viewer.addEventListener('pointerup', (event) => {
-  if (!trybMiarki || punktyPomiaru.length >= 2) return;
-
-  // Obliczamy dystans, o jaki przesunął się kursor podczas wciśnięcia
-  const przesuniecieX = Math.abs(event.clientX - pozycjaStartowaX);
-  const przesuniecieY = Math.abs(event.clientY - pozycjaStartowaY);
-
-  // Jeśli kursor przesunął się o więcej niż 6 pikseli, oznacza to OBRACANIE/ZOOM kamery - ignorujemy stawianie punktu
-  if (przesuniecieX > 6 || przesuniecieY > 6) {
-    return;
-  }
-
-  const rect = viewer.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
-  // Próbujemy trafić w siatkę modelu 3D
-  const hit = viewer.positionAndNormalFromPoint(x, y);
-  if (!hit) return; // Kliknięto w puste tło
-
-  const punkt = hit.position;
-  punktyPomiaru.push(punkt);
-
-  // Dodanie znacznika hotspotu
-  const numer = punktyPomiaru.length;
-  const dot = document.createElement('div');
-  dot.id = `hotspot-pt-${numer}`;
-  dot.slot = `hotspot-point-${numer}`;
-  dot.dataset.position = `${punkt.x} ${punkt.y} ${punkt.z}`;
-  dot.className = 'measure-point';
-  viewer.appendChild(dot);
-
-  if (punktyPomiaru.length === 1) {
-    measureOutput.textContent = "Kliknij 2. punkt na modelu...";
-  } else if (punktyPomiaru.length === 2) {
-    // Obliczenie dystansu
-    const p1 = punktyPomiaru[0];
-    const p2 = punktyPomiaru[1];
-    const dx = p2.x - p1.x;
-    const dy = p2.y - p1.y;
-    const dz = p2.z - p1.z;
-    
-    const dystansM = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    const dystansCm = (dystansM * 100).toFixed(2);
-    const dystansMm = (dystansM * 1000).toFixed(1);
-
-    measureOutput.textContent = `Odległość: ${dystansCm} cm (${dystansMm} mm)`;
-  }
-});
-
-// Usunięcie znaczników po zmianie zabytku na inny
-viewer.addEventListener('load', () => {
-  usunZnaczniki();
-  if (trybMiarki) {
-    measureOutput.textContent = "Kliknij 1. punkt na modelu...";
-  }
-});
-
-//------------------------------------ fullscreen
-
-const viewerSection = document.querySelector('.viewer-section');
-const fullscreenBtn = document.getElementById('fullscreen-btn');
-
-fullscreenBtn.addEventListener('click', () => {
-  if (!document.fullscreenElement) {
-    // Wejście w tryb pełnoekranowy (cały widok strony)
-    viewerSection.requestFullscreen().catch((err) => {
-      console.warn(`Błąd wejścia w tryb pełnoekranowy: ${err.message}`);
+      if (trybMiarki) {
+        toggleMeasureBtn.textContent = "Wyłącz miarkę";
+        measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+        clearMeasureBtn.style.display = "inline-block";
+        viewer.autoRotate = false; // Zatrzymujemy obracanie samoczynne (ale myszką nadal można)
+      } else {
+        toggleMeasureBtn.textContent = "Włącz miarkę";
+        measureOutput.textContent = "";
+        clearMeasureBtn.style.display = "none";
+        viewer.autoRotate = true;
+        usunZnaczniki();
+      }
     });
-  } else {
-    // Wyjście z trybu pełnoekranowego
-    document.exitFullscreen();
-  }
-});
 
-// Automatyczna zmiana podpisu przycisku przy wejściu/wyjściu (np. klawiszem ESC)
-document.addEventListener('fullscreenchange', () => {
-  if (document.fullscreenElement) {
-    fullscreenBtn.textContent = "✕ Zamknij pełny ekran";
-    fullscreenBtn.classList.add('active');
-  } else {
-    fullscreenBtn.textContent = "⛶ Pełny ekran";
-    fullscreenBtn.classList.remove('active');
-  }
-});
-  </script>
+    clearMeasureBtn.addEventListener('click', () => {
+      usunZnaczniki();
+      if (trybMiarki) measureOutput.textContent = "Kliknij 1. punkt na modelu...";
+    });
 
-</body>
-</html>
+    function usunZnaczniki() {
+      punktyPomiaru = [];
+      const p1 = document.getElementById('hotspot-pt-1');
+      const p2 = document.getElementById('hotspot-pt-2');
+      if (p1) p1.remove(); if (p2) p2.remove();
+    }
+
+    // Wykrywanie kliknięcia vs przeciągnięcia (żeby można było obracać przy mierzeniu)
+    viewer.addEventListener('pointerdown', (e) => { pozStartX = e.clientX; pozStartY = e.clientY; });
+    
+    viewer.addEventListener('pointerup', (e) => {
+      if (!trybMiarki || punktyPomiaru.length >= 2) return;
+      
+      // Jeśli użytkownik przesunął mysz o więcej niż 6px, to znaczy że obracał model - nie stawiaj punktu
+      if (Math.abs(e.clientX - pozStartX) > 6 || Math.abs(e.clientY - pozStartY) > 6) return;
+
+      const rect = viewer.getBoundingClientRect();
+      const hit = viewer.positionAndNormalFromPoint(e.clientX - rect.left, e.clientY - rect.top);
+      if (!hit) return;
+
+      const punkt = hit.position;
+      punktyPomiaru.push(punkt);
+
+      const numer = punktyPomiaru.length;
+      const dot = document.createElement('div');
+      dot.id = `hotspot-pt-${numer}`;
+      dot.slot = `hotspot-point-${numer}`;
+      dot.dataset.position = `${punkt.x} ${punkt.y} ${punkt.z}`;
+      dot.className = 'measure-point';
+      viewer.appendChild(dot);
+
+      if (punktyPomiaru.length === 1) {
+        measureOutput.textContent = "Kliknij 2. punkt na modelu...";
+      } else if (punktyPomiaru.length === 2) {
+        const p1 = punktyPomiaru[0]; const p2 = punktyPomiaru[1];
+        const dx = p2.x - p1.x; const dy = p2.y - p1.y; const dz = p2.z - p1.z;
+        const dystansM = Math.sqrt(dx*dx + dy*dy + dz*dz);
+        measureOutput.textContent = `Odległość: ${(dystansM * 100).toFixed(2)} cm (${(dystansM * 1000).toFixed(1)} mm)`;
+      }
+    });
+    viewer.addEventListener('load', () => { usunZnaczniki(); if (trybMiarki) measureOutput.textContent = "Kliknij 1. punkt na modelu..."; });
+
+    // --- FULLSCREEN ---
+    const viewerSection = document.querySelector('.viewer-section');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        viewerSection.requestFullscreen().catch(err => console.warn(err));
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        fullscreenBtn.textContent = "✕ Zamknij pełny ekran";
+        fullscreenBtn.classList.add('active');
+      } else {
+        fullscreenBtn.
