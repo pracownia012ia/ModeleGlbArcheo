@@ -445,7 +445,7 @@
 	// Zapobiega aktywacji wewnętrznych skrótów kamery (np. centrowania na kliknięcie)
 		if (trybMiarki) {  e.stopPropagation(); }
   
-  pozStartX = e.clientX; pozStartY = e.clientY; };
+  pozStartX = e.clientX; pozStartY = e.clientY; });
     
     viewer.addEventListener('pointerup', (e) => {
       if (!trybMiarki || punktyPomiaru.length >= 2) return;
