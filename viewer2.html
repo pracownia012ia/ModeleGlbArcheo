@@ -426,14 +426,12 @@ toggleMeasureBtn.addEventListener('click', () => {
     measureOutput.textContent = "Kliknij 1. punkt na modelu...";
     clearMeasureBtn.style.display = "inline-block";
     // Zablokuj obracanie modelu, by kliknięcie trafiało w punkt
-    viewer.removeAttribute('camera-controls');
 	viewer.autoRotate = false;
   } else {
     toggleMeasureBtn.textContent = "Włącz miarkę";
     measureOutput.textContent = "";
     clearMeasureBtn.style.display = "none";
     // Przywróć swobodne obracanie
-    viewer.setAttribute('camera-controls', '');
 	viewer.autoRotate = true;
     usunZnaczniki();
   }
@@ -456,21 +454,40 @@ function usunZnaczniki() {
 }
 
 // Obsługa kliknięcia na powierzchni modelu
-viewer.addEventListener('click', (event) => {
+let pozycjaStartowaX = 0;
+let pozycjaStartowaY = 0;
+
+// Rejestrujemy moment naciśnięcia przycisku myszy / dotknięcia ekranu
+viewer.addEventListener('pointerdown', (event) => {
+  pozycjaStartowaX = event.clientX;
+  pozycjaStartowaY = event.clientY;
+});
+
+// Stawiamy punkt tylko wtedy, gdy użytkownik NIE przesuwał kamery
+viewer.addEventListener('pointerup', (event) => {
   if (!trybMiarki || punktyPomiaru.length >= 2) return;
+
+  // Obliczamy dystans, o jaki przesunął się kursor podczas wciśnięcia
+  const przesuniecieX = Math.abs(event.clientX - pozycjaStartowaX);
+  const przesuniecieY = Math.abs(event.clientY - pozycjaStartowaY);
+
+  // Jeśli kursor przesunął się o więcej niż 6 pikseli, oznacza to OBRACANIE/ZOOM kamery - ignorujemy stawianie punktu
+  if (przesuniecieX > 6 || przesuniecieY > 6) {
+    return;
+  }
 
   const rect = viewer.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
-  // Pobranie pozycji 3D w metrach z modelu
+  // Próbujemy trafić w siatkę modelu 3D
   const hit = viewer.positionAndNormalFromPoint(x, y);
-  if (!hit) return; // Kliknięto w puste tło, poza modelem
+  if (!hit) return; // Kliknięto w puste tło
 
   const punkt = hit.position;
   punktyPomiaru.push(punkt);
 
-  // Dodaj wizualny znacznik na modelu
+  // Dodanie znacznika hotspotu
   const numer = punktyPomiaru.length;
   const dot = document.createElement('div');
   dot.id = `hotspot-pt-${numer}`;
@@ -482,14 +499,13 @@ viewer.addEventListener('click', (event) => {
   if (punktyPomiaru.length === 1) {
     measureOutput.textContent = "Kliknij 2. punkt na modelu...";
   } else if (punktyPomiaru.length === 2) {
-    // Obliczenie dystansu 3D
+    // Obliczenie dystansu
     const p1 = punktyPomiaru[0];
     const p2 = punktyPomiaru[1];
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
     const dz = p2.z - p1.z;
     
-    // Dystans w metrach
     const dystansM = Math.sqrt(dx * dx + dy * dy + dz * dz);
     const dystansCm = (dystansM * 100).toFixed(2);
     const dystansMm = (dystansM * 1000).toFixed(1);
