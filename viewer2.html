@@ -451,10 +451,11 @@
       const rect = viewer.getBoundingClientRect();
       const hit = viewer.positionAndNormalFromPoint(e.clientX - rect.left, e.clientY - rect.top);
       if (!hit) return;
-
+		
+		viewer.removeAttribute('camera-controls');
       const punkt = hit.position;
       punktyPomiaru.push(punkt);
-	viewer.cameraTarget = `${punkt.x} ${punkt.y} ${punkt.z}`;
+	
       const numer = punktyPomiaru.length;
       const dot = document.createElement('div');
       dot.id = `hotspot-pt-${numer}`;
@@ -462,7 +463,7 @@
       dot.dataset.position = `${punkt.x} ${punkt.y} ${punkt.z}`;
       dot.className = 'measure-point';
       viewer.appendChild(dot);
-
+		viewer.setAttribute('camera-','');
       if (punktyPomiaru.length === 1) {
         measureOutput.textContent = "Kliknij 2. punkt na modelu...";
       } else if (punktyPomiaru.length === 2) {
