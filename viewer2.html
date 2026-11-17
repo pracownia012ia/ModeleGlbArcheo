@@ -555,7 +555,16 @@
 
 		if (trybSurowy) {
 		  // 1. Zdejmujemy kolor (zostaje Normal Map oraz Ambient Occlusion z pliku!)
-		  pbr.baseColorTexture.setTexture(null);
+		  const aoTex = material.occlusionTexture ? material.occlusionTexture.texture : null;
+
+		  if (aoTex) {
+			// TRIK: Podkładamy mapę AO bezpośrednio jako teksturę koloru bazowego!
+			// Wtedy cienie z AO wymnożą się przez jasnoszary kolor (baseColorFactor)
+			pbr.baseColorTexture.setTexture(aoTex);
+		  } else {
+			// Jeśli nie ma AO, po prostu usuwamy teksturę koloru
+			pbr.baseColorTexture.setTexture(null);
+		  }
 		  
 		  // 2. Ustawiamy kolor jasnego gipsu/gliny (ciepły szary daje przyjemniejszy cień niż czysty biały)
 		  pbr.setBaseColorFactor([0.76, 0.75, 0.72, 1]);
