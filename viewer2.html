@@ -508,105 +508,104 @@
 	// koniec --- FULLSCREEN ---
 	let domyslnyTarget = "auto auto auto";
 	// --- ZMIANA MATERIAŁU / WIDOK DETALI (AO TYLKO W TRYBIE DETALI) ---
-	const toggleMatBtn = document.getElementById('toggle-material-btn');
-	let zapisaneMaterialy = [];
-	let trybSurowy = false;
-	let modelMaWarianty = false;
+const toggleMatBtn = document.getElementById('toggle-material-btn');
+let zapisaneMaterialy = [];
+let trybSurowy = false;
+let modelMaWarianty = false;
 
-	viewer.addEventListener('load', () => {
-	  trybSurowy = false;
-	  zapisaneMaterialy = [];
-	  toggleMatBtn.textContent = "👁️ Widok detali";
-	  toggleMatBtn.classList.remove('active');
-	  viewer.exposure = 1.0;
+viewer.addEventListener('load', () => {
+  trybSurowy = false;
+  zapisaneMaterialy = [];
+  toggleMatBtn.textContent = "👁️ Widok detali";
+  toggleMatBtn.classList.remove('active');
+  viewer.exposure = 1.0;
 
-	  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
-		modelMaWarianty = true;
-		toggleMatBtn.style.display = 'inline-block';
-	  } else {
-		modelMaWarianty = false;
-		let maJakakolwiekTekstureLubAO = false;
+  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
+    modelMaWarianty = true;
+    toggleMatBtn.style.display = 'inline-block';
+  } else {
+    modelMaWarianty = false;
+    let maJakakolwiekTekstureLubAO = false;
 
-		// Przechodzimy przez wszystkie materiały w modelu
-		viewer.model.materials.forEach((material) => {
-		  const pbr = material.pbrMetallicRoughness;
-		  const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
-		  const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
+    // Przechodzimy przez wszystkie materiały w modelu
+    viewer.model.materials.forEach((material) => {
+      const pbr = material.pbrMetallicRoughness;
+      const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
+      const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
 
-		  if (texKolor || texAO) {
-			maJakakolwiekTekstureLubAO = true;
-		  }
+      if (texKolor || texAO) {
+        maJakakolwiekTekstureLubAO = true;
+      }
 
-		  // Zapamiętujemy oryginalne ustawienia każdego materiału
-		  zapisaneMaterialy.push({
-			material: material,
-			kolorTex: texKolor,
-			kolorFactor: pbr.baseColorFactor,
-			roughness: pbr.roughnessFactor,
-			metallic: pbr.metallicFactor,
-			aoTex: texAO
-		  });
+      // Zapamiętujemy oryginalne ustawienia każdego materiału
+      zapisaneMaterialy.push({
+        material: material,
+        kolorTex: texKolor,
+        kolorFactor: pbr.baseColorFactor,
+        roughness: pbr.roughnessFactor,
+        metallic: pbr.metallicFactor,
+        aoTex: texAO
+      });
 
-		  // KLUCZOWE: Wyłączamy AO na start, aby nie przyciemniało zwykłego modelu z teksturą!
-		  if (material.occlusionTexture && texAO) {
-			material.occlusionTexture.setTexture(null);
-		  }
-		});
+      // KLUCZOWE: Wyłączamy AO na start, aby nie przyciemniało zwykłego modelu z teksturą!
+      if (material.occlusionTexture && texAO) {
+        material.occlusionTexture.setTexture(null);
+      }
+    });
 
-		toggleMatBtn.style.display = maJakakolwiekTekstureLubAO ? 'inline-block' : 'none';
-	  }
-	});
+    toggleMatBtn.style.display = maJakakolwiekTekstureLubAO ? 'inline-block' : 'none';
+  }
+});
 
-	toggleMatBtn.addEventListener('click', () => {
-	  trybSurowy = !trybSurowy;
-	  toggleMatBtn.classList.toggle('active', trybSurowy);
+toggleMatBtn.addEventListener('click', () => {
+  trybSurowy = !trybSurowy;
+  toggleMatBtn.classList.toggle('active', trybSurowy);
 
-	  if (modelMaWarianty) {
-		const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
-		viewer.variantName = docelowyWariant;
-	  } else {
-		zapisaneMaterialy.forEach((dane) => {
-		  const pbr = dane.material.pbrMetallicRoughness;
+  if (modelMaWarianty) {
+    const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
+    viewer.variantName = docelowyWariant;
+  } else {
+    zapisaneMaterialy.forEach((dane) => {
+      const pbr = dane.material.pbrMetallicRoughness;
 
-		  if (trybSurowy) {
-			// 1. Włączamy zapamiętaną mapę AO tylko w tym widoku
-			if (dane.aoTex) {
-			  // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
-			  if (pbr.baseColorTexture) {
-				pbr.baseColorTexture.setTexture(dane.aoTex);
-			  }
-			  if (dane.material.occlusionTexture) {
-				dane.material.occlusionTexture.setTexture(dane.aoTex);
-			  }
-			} else if (pbr.baseColorTexture) {
-			  pbr.baseColorTexture.setTexture(null);
-			}
+      if (trybSurowy) {
+        // 1. Włączamy zapamiętaną mapę AO tylko w tym widoku
+        if (dane.aoTex) {
+          // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
+          if (pbr.baseColorTexture) {
+            pbr.baseColorTexture.setTexture(dane.aoTex);
+          }
+          if (dane.material.occlusionTexture) {
+            dane.material.occlusionTexture.setTexture(dane.aoTex);
+          }
+        } else if (pbr.baseColorTexture) {
+          pbr.baseColorTexture.setTexture(null);
+        }
 
-			// 2. Ustawiamy parametry matowego odlewu gipsowego
-			pbr.setBaseColorFactor([0.82, 0.80, 0.77, 1]);
-			pbr.setMetallicFactor(0.0);
-			pbr.setRoughnessFactor(0.75);
-			viewer.exposure = 0.92;
-		  } else {
-			// POWRÓT DO TEKSTURY: Przywracamy kolor, a AO z powrotem wyłączamy (null)
-			if (pbr.baseColorTexture) {
-			  pbr.baseColorTexture.setTexture(dane.kolorTex);
-			}
-			if (dane.material.occlusionTexture) {
-			  dane.material.occlusionTexture.setTexture(null);
-			}
+        // 2. Ustawiamy parametry matowego odlewu gipsowego
+        pbr.setBaseColorFactor([0.82, 0.80, 0.77, 1]);
+        pbr.setMetallicFactor(0.0);
+        pbr.setRoughnessFactor(0.75);
+        viewer.exposure = 0.92;
+      } else {
+        // POWRÓT DO TEKSTURY: Przywracamy kolor, a AO z powrotem wyłączamy (null)
+        if (pbr.baseColorTexture) {
+          pbr.baseColorTexture.setTexture(dane.kolorTex);
+        }
+        if (dane.material.occlusionTexture) {
+          dane.material.occlusionTexture.setTexture(null);
+        }
 
-			pbr.setBaseColorFactor(dane.kolorFactor);
-			pbr.setMetallicFactor(dane.metallic);
-			pbr.setRoughnessFactor(dane.roughness);
-			viewer.exposure = 1.0;
-		  }
-		});
-	  }
+        pbr.setBaseColorFactor(dane.kolorFactor);
+        pbr.setMetallicFactor(dane.metallic);
+        pbr.setRoughnessFactor(dane.roughness);
+        viewer.exposure = 1.0;
+      }
+    });
+  }
 
   toggleMatBtn.textContent = trybSurowy ? "🎨 Włącz teksturę" : "👁️ Widok detali";
 });
-	});
   </script>
 
 </body>
