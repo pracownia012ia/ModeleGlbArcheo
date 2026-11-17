@@ -507,85 +507,105 @@
     });
 	// koniec --- FULLSCREEN ---
 	let domyslnyTarget = "auto auto auto";
-	// --- ZMIANA MATERIAŁU / WIDOK DETALI (CLAY RENDER Z PODBICIEM DETALI) ---
-	const toggleMatBtn = document.getElementById('toggle-material-btn');
-	let oryginalnaTekstura = null;
-	let oryginalnyKolor = null;
-	let oryginalnaChropowatosc = 1;
-	let oryginalnaMetalicznosc = 0;
-	let trybSurowy = false;
-	let modelMaWarianty = false;
+	// --- ZMIANA MATERIAŁU / WIDOK DETALI (AO TYLKO W TRYBIE DETALI) ---
+const toggleMatBtn = document.getElementById('toggle-material-btn');
+let zapisaneMaterialy = [];
+let trybSurowy = false;
+let modelMaWarianty = false;
 
-	viewer.addEventListener('load', () => {
-	  trybSurowy = false;
-	  toggleMatBtn.textContent = "️Widok detali";
-	  toggleMatBtn.classList.remove('active');
-	  viewer.exposure = 1; // Przywrócenie domyślnej ekspozycji
+viewer.addEventListener('load', () => {
+  trybSurowy = false;
+  zapisaneMaterialy = [];
+  toggleMatBtn.textContent = "👁️ Widok detali";
+  toggleMatBtn.classList.remove('active');
+  viewer.exposure = 1.0;
 
-	  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
-		modelMaWarianty = true;
-		toggleMatBtn.style.display = 'inline-block';
-	  } else {
-		const material = viewer.model.materials[0];
-		if (material && material.pbrMetallicRoughness.baseColorTexture) {
-		  const pbr = material.pbrMetallicRoughness;
-		  oryginalnaTekstura = pbr.baseColorTexture.texture;
-		  oryginalnyKolor = pbr.baseColorFactor;
-		  oryginalnaChropowatosc = pbr.roughnessFactor;
-		  oryginalnaMetalicznosc = pbr.metallicFactor;
-		  
-		  modelMaWarianty = false;
-		  toggleMatBtn.style.display = 'inline-block';
-		} else {
-		  toggleMatBtn.style.display = 'none';
-		}
-	  }
-	});
+  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
+    modelMaWarianty = true;
+    toggleMatBtn.style.display = 'inline-block';
+  } else {
+    modelMaWarianty = false;
+    let maJakakolwiekTekstureLubAO = false;
 
-	toggleMatBtn.addEventListener('click', () => {
-	  trybSurowy = !trybSurowy;
-	  toggleMatBtn.classList.toggle('active', trybSurowy);
+    // Przechodzimy przez wszystkie materiały w modelu
+    viewer.model.materials.forEach((material) => {
+      const pbr = material.pbrMetallicRoughness;
+      const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
+      const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
 
-	  if (modelMaWarianty) {
-		const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
-		viewer.variantName = docelowyWariant;
-	  } else {
-		const material = viewer.model.materials[0];
-		const pbr = material.pbrMetallicRoughness;
+      if (texKolor || texAO) {
+        maJakakolwiekTekstureLubAO = true;
+      }
 
-		if (trybSurowy) {
-			const aoTex = material.occlusionTexture ? material.occlusionTexture.texture : null;
-		  console.log("Obiekt occlusionTexture w pliku GLB:", material.occlusionTexture);
-		  console.log("Wyciągnięta tekstura AO (aoTex):", aoTex);
+      // Zapamiętujemy oryginalne ustawienia każdego materiału
+      zapisaneMaterialy.push({
+        material: material,
+        kolorTex: texKolor,
+        kolorFactor: pbr.baseColorFactor,
+        roughness: pbr.roughnessFactor,
+        metallic: pbr.metallicFactor,
+        aoTex: texAO
+      });
 
-		  if (aoTex) {
-			console.log("-> SUKCES: Podkładam teksturę AO pod baseColorTexture!");
-			pbr.baseColorTexture.setTexture(aoTex);
-		  } else {
-			console.warn("-> UWAGA: Nie znaleziono tekstury AO! Ustawiam baseColorTexture na null.");
-			pbr.baseColorTexture.setTexture(null);
-		  }
-		  
-		  // 2. Ustawiamy kolor jasnego gipsu/gliny (ciepły szary daje przyjemniejszy cień niż czysty biały)
-		  pbr.setBaseColorFactor([0.76, 0.75, 0.72, 1]);
-		  
-		  // 3. Wyłączamy metaliczność (np. dla brązów) i ustawiamy satynowy mat, który łapie światło na krawędziach
-		  pbr.setMetallicFactor(0.0);
-		  pbr.setRoughnessFactor(0.72);
-		  
-		  // 4. Lekko obniżamy ekspozycję sceny, aby uwydatnić cienie w zagłębieniach
-		  viewer.exposure = 0.88;
-		} else {
-		  // Przywracamy wszystkie oryginalne parametry zabytku
-		  pbr.baseColorTexture.setTexture(oryginalnaTekstura);
-		  pbr.setBaseColorFactor(oryginalnyKolor);
-		  pbr.setMetallicFactor(oryginalnaMetalicznosc);
-		  pbr.setRoughnessFactor(oryginalnaChropowatosc);
-		  viewer.exposure = 1.0;
-		}
-	  }
+      // KLUCZOWE: Wyłączamy AO na start, aby nie przyciemniało zwykłego modelu z teksturą!
+      if (material.occlusionTexture && texAO) {
+        material.occlusionTexture.setTexture(null);
+      }
+    });
 
-	  toggleMatBtn.textContent = trybSurowy ? "Włącz teksturę" : "Widok detali";
+    toggleMatBtn.style.display = maJakakolwiekTekstureLubAO ? 'inline-block' : 'none';
+  }
+});
+
+toggleMatBtn.addEventListener('click', () => {
+  trybSurowy = !trybSurowy;
+  toggleMatBtn.classList.toggle('active', trybSurowy);
+
+  if (modelMaWarianty) {
+    const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
+    viewer.variantName = docelowyWariant;
+  } else {
+    zapisaneMaterialy.forEach((dane) => {
+      const pbr = dane.material.pbrMetallicRoughness;
+
+      if (trybSurowy) {
+        // 1. Włączamy zapamiętaną mapę AO tylko w tym widoku
+        if (dane.aoTex) {
+          // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
+          if (pbr.baseColorTexture) {
+            pbr.baseColorTexture.setTexture(dane.aoTex);
+          }
+          if (dane.material.occlusionTexture) {
+            dane.material.occlusionTexture.setTexture(dane.aoTex);
+          }
+        } else if (pbr.baseColorTexture) {
+          pbr.baseColorTexture.setTexture(null);
+        }
+
+        // 2. Ustawiamy parametry matowego odlewu gipsowego
+        pbr.setBaseColorFactor([0.82, 0.80, 0.77, 1]);
+        pbr.setMetallicFactor(0.0);
+        pbr.setRoughnessFactor(0.75);
+        viewer.exposure = 0.92;
+      } else {
+        // POWRÓT DO TEKSTURY: Przywracamy kolor, a AO z powrotem wyłączamy (null)
+        if (pbr.baseColorTexture) {
+          pbr.baseColorTexture.setTexture(dane.kolorTex);
+        }
+        if (dane.material.occlusionTexture) {
+          dane.material.occlusionTexture.setTexture(null);
+        }
+
+        pbr.setBaseColorFactor(dane.kolorFactor);
+        pbr.setMetallicFactor(dane.metallic);
+        pbr.setRoughnessFactor(dane.roughness);
+        viewer.exposure = 1.0;
+      }
+    });
+  }
+
+  toggleMatBtn.textContent = trybSurowy ? "🎨 Włącz teksturę" : "👁️ Widok detali";
+});
 	});
   </script>
 
