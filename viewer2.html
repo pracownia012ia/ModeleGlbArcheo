@@ -505,71 +505,78 @@
         fullscreenBtn.classList.remove('active');
       }
     });
-	
+	// koniec --- FULLSCREEN ---
 	let domyslnyTarget = "auto auto auto";
-		// --- ZMIANA MATERIAŁU / WIDOK DETALI (CLAY RENDER) ---
+	// --- ZMIANA MATERIAŁU / WIDOK DETALI (CLAY RENDER Z PODBICIEM DETALI) ---
 	const toggleMatBtn = document.getElementById('toggle-material-btn');
 	let oryginalnaTekstura = null;
 	let oryginalnyKolor = null;
+	let oryginalnaChropowatosc = 1;
+	let oryginalnaMetalicznosc = 0;
 	let trybSurowy = false;
 	let modelMaWarianty = false;
 
-	// Kiedy model się załaduje, sprawdzamy jego budowę
 	viewer.addEventListener('load', () => {
 	  trybSurowy = false;
 	  toggleMatBtn.textContent = "👁️ Widok detali";
 	  toggleMatBtn.classList.remove('active');
+	  viewer.exposure = 1; // Przywrócenie domyślnej ekspozycji
 
-	  // 1. Sprawdzamy, czy model ma przygotowane Warianty (glTF Variants)
 	  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
 		modelMaWarianty = true;
 		toggleMatBtn.style.display = 'inline-block';
 	  } else {
-		// 2. Jeśli nie ma wariantów, sprawdzamy czy możemy zdjąć teksturę ręcznie w kodzie
 		const material = viewer.model.materials[0];
 		if (material && material.pbrMetallicRoughness.baseColorTexture) {
-		  oryginalnaTekstura = material.pbrMetallicRoughness.baseColorTexture.texture;
-		  oryginalnyKolor = material.pbrMetallicRoughness.baseColorFactor;
+		  const pbr = material.pbrMetallicRoughness;
+		  oryginalnaTekstura = pbr.baseColorTexture.texture;
+		  oryginalnyKolor = pbr.baseColorFactor;
+		  oryginalnaChropowatosc = pbr.roughnessFactor;
+		  oryginalnaMetalicznosc = pbr.metallicFactor;
+		  
 		  modelMaWarianty = false;
 		  toggleMatBtn.style.display = 'inline-block';
 		} else {
-		  // Model nie ma ani wariantów, ani tekstury bazy (jest jednolity) - ukrywamy przycisk
 		  toggleMatBtn.style.display = 'none';
 		}
 	  }
 	});
 
-	// Obsługa kliknięcia przycisku
 	toggleMatBtn.addEventListener('click', () => {
 	  trybSurowy = !trybSurowy;
 	  toggleMatBtn.classList.toggle('active', trybSurowy);
 
 	  if (modelMaWarianty) {
-		// SCENARIUSZ A: Przełączanie między zapisanymi wariantami z Blendera
-		// Zakładamy, że wariant 0 to domyślny, a wariant 1 to Twój drugi materiał
 		const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
 		viewer.variantName = docelowyWariant;
 	  } else {
-		// SCENARIUSZ B: Dynamiczne generowanie "surowego renderu" (Clay Mode)
 		const material = viewer.model.materials[0];
+		const pbr = material.pbrMetallicRoughness;
+
 		if (trybSurowy) {
-		  // Usuwamy główną teksturę koloru, ale ZOSTAWIAMY mapę wypukłości/normalnych
-		  material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
-		  // Ustawiamy gładki, jasnoszary kolor (lepiej odbija światło by pokazać detale)
-		  material.pbrMetallicRoughness.setBaseColorFactor([0.7, 0.7, 0.7, 1]);
+		  // 1. Zdejmujemy kolor (zostaje Normal Map oraz Ambient Occlusion z pliku!)
+		  pbr.baseColorTexture.setTexture(null);
+		  
+		  // 2. Ustawiamy kolor jasnego gipsu/gliny (ciepły szary daje przyjemniejszy cień niż czysty biały)
+		  pbr.setBaseColorFactor([0.76, 0.75, 0.72, 1]);
+		  
+		  // 3. Wyłączamy metaliczność (np. dla brązów) i ustawiamy satynowy mat, który łapie światło na krawędziach
+		  pbr.setMetallicFactor(0.0);
+		  pbr.setRoughnessFactor(0.72);
+		  
+		  // 4. Lekko obniżamy ekspozycję sceny, aby uwydatnić cienie w zagłębieniach
+		  viewer.exposure = 0.88;
 		} else {
-		  // Przywracamy oryginalną teksturę i kolor
-		  material.pbrMetallicRoughness.baseColorTexture.setTexture(oryginalnaTekstura);
-		  material.pbrMetallicRoughness.setBaseColorFactor(oryginalnyKolor);
+		  // Przywracamy wszystkie oryginalne parametry zabytku
+		  pbr.baseColorTexture.setTexture(oryginalnaTekstura);
+		  pbr.setBaseColorFactor(oryginalnyKolor);
+		  pbr.setMetallicFactor(oryginalnaMetalicznosc);
+		  pbr.setRoughnessFactor(oryginalnaChropowatosc);
+		  viewer.exposure = 1.0;
 		}
 	  }
 
-	  // Zmiana tekstu na przycisku
-	  if (trybSurowy) {
-		toggleMatBtn.textContent = "🎨 Włącz teksturę";
-	  } else {
-		toggleMatBtn.textContent = "👁️ Widok detali";
-	  }
+	  toggleMatBtn.textContent = trybSurowy ? "🎨 Włącz teksturę" : "👁️ Widok detali";
 	});
   </script>
 
