@@ -209,7 +209,9 @@
       
       <div class="measure-toolbar">
         <button id="fullscreen-btn" type="button" class="measure-btn" title="Pełny ekran">⛶ Pełny ekran</button>
+		<button id="toggle-material-btn" type="button" class="measure-btn" style="display: none;">👁️ Widok detali</button>
         <button id="toggle-measure" type="button" class="measure-btn">Włącz miarkę</button>
+
         <button id="clear-measure" type="button" class="measure-btn" style="display: none;">Wyczyść pomiar</button>
         <span id="measure-output" class="measure-result"></span>
       </div>
@@ -505,7 +507,70 @@
     });
 	
 	let domyslnyTarget = "auto auto auto";
+		// --- ZMIANA MATERIAŁU / WIDOK DETALI (CLAY RENDER) ---
+	const toggleMatBtn = document.getElementById('toggle-material-btn');
+	let oryginalnaTekstura = null;
+	let oryginalnyKolor = null;
+	let trybSurowy = false;
+	let modelMaWarianty = false;
 
+	// Kiedy model się załaduje, sprawdzamy jego budowę
+	viewer.addEventListener('load', () => {
+	  trybSurowy = false;
+	  toggleMatBtn.textContent = "👁️ Widok detali";
+	  toggleMatBtn.classList.remove('active');
+
+	  // 1. Sprawdzamy, czy model ma przygotowane Warianty (glTF Variants)
+	  if (viewer.availableVariants && viewer.availableVariants.length > 0) {
+		modelMaWarianty = true;
+		toggleMatBtn.style.display = 'inline-block';
+	  } else {
+		// 2. Jeśli nie ma wariantów, sprawdzamy czy możemy zdjąć teksturę ręcznie w kodzie
+		const material = viewer.model.materials[0];
+		if (material && material.pbrMetallicRoughness.baseColorTexture) {
+		  oryginalnaTekstura = material.pbrMetallicRoughness.baseColorTexture.texture;
+		  oryginalnyKolor = material.pbrMetallicRoughness.baseColorFactor;
+		  modelMaWarianty = false;
+		  toggleMatBtn.style.display = 'inline-block';
+		} else {
+		  // Model nie ma ani wariantów, ani tekstury bazy (jest jednolity) - ukrywamy przycisk
+		  toggleMatBtn.style.display = 'none';
+		}
+	  }
+	});
+
+	// Obsługa kliknięcia przycisku
+	toggleMatBtn.addEventListener('click', () => {
+	  trybSurowy = !trybSurowy;
+	  toggleMatBtn.classList.toggle('active', trybSurowy);
+
+	  if (modelMaWarianty) {
+		// SCENARIUSZ A: Przełączanie między zapisanymi wariantami z Blendera
+		// Zakładamy, że wariant 0 to domyślny, a wariant 1 to Twój drugi materiał
+		const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
+		viewer.variantName = docelowyWariant;
+	  } else {
+		// SCENARIUSZ B: Dynamiczne generowanie "surowego renderu" (Clay Mode)
+		const material = viewer.model.materials[0];
+		if (trybSurowy) {
+		  // Usuwamy główną teksturę koloru, ale ZOSTAWIAMY mapę wypukłości/normalnych
+		  material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
+		  // Ustawiamy gładki, jasnoszary kolor (lepiej odbija światło by pokazać detale)
+		  material.pbrMetallicRoughness.setBaseColorFactor([0.7, 0.7, 0.7, 1]);
+		} else {
+		  // Przywracamy oryginalną teksturę i kolor
+		  material.pbrMetallicRoughness.baseColorTexture.setTexture(oryginalnaTekstura);
+		  material.pbrMetallicRoughness.setBaseColorFactor(oryginalnyKolor);
+		}
+	  }
+
+	  // Zmiana tekstu na przycisku
+	  if (trybSurowy) {
+		toggleMatBtn.textContent = "🎨 Włącz teksturę";
+	  } else {
+		toggleMatBtn.textContent = "👁️ Widok detali";
+	  }
+	});
   </script>
 
 </body>
