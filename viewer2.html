@@ -554,15 +554,15 @@
 		const pbr = material.pbrMetallicRoughness;
 
 		if (trybSurowy) {
-		  // 1. Zdejmujemy kolor (zostaje Normal Map oraz Ambient Occlusion z pliku!)
-		  const aoTex = material.occlusionTexture ? material.occlusionTexture.texture : null;
+			const aoTex = material.occlusionTexture ? material.occlusionTexture.texture : null;
+		  console.log("Obiekt occlusionTexture w pliku GLB:", material.occlusionTexture);
+		  console.log("Wyciągnięta tekstura AO (aoTex):", aoTex);
 
 		  if (aoTex) {
-			// TRIK: Podkładamy mapę AO bezpośrednio jako teksturę koloru bazowego!
-			// Wtedy cienie z AO wymnożą się przez jasnoszary kolor (baseColorFactor)
+			console.log("-> SUKCES: Podkładam teksturę AO pod baseColorTexture!");
 			pbr.baseColorTexture.setTexture(aoTex);
 		  } else {
-			// Jeśli nie ma AO, po prostu usuwamy teksturę koloru
+			console.warn("-> UWAGA: Nie znaleziono tekstury AO! Ustawiam baseColorTexture na null.");
 			pbr.baseColorTexture.setTexture(null);
 		  }
 		  
