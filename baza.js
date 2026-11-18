@@ -3,16 +3,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
     // 2. Baza zabytków podzielona na okresy:
     const BAZA_OKRESOW = {
       "wczesne_zelazo": [
-		{
-		  tytul: "Naczynie pomorskie",
-          plik: "NaczyniePomorskieBlend2AOSmaller.glb",
-          poster: "MuzeumNaczyniePomorskiePrev.png",
-          stanowisko: "Żuków, stan. 1,gm.…woj. lubelskie",
-          opis: "Naczynie rytualne, tzw. kernos z wczesnej epoki żelaza (600-500 BC, kultura pomorska)",
-          badania: "Badania wykopaliskowe w 1960 r. (J. Gurba)",
-          miejsce: "Zbiory Muzeum Narodowego w Lublinie",
-          literatura: "Czopek 1992, tabl. XLI; Kuśnierz 2010, ryc. 2: 1"
-        },
+		
         {
           tytul: "Kubek z ornamentem",
           plik: "EKInkrustowanyKubekGLBVer2AO.glb",
@@ -22,8 +13,18 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w … r. (U. Kurzątkowska, TYLKO?)",
           miejsce: "Zbiory IA UMCS",
           literatura: ""
+        },
+        {
+		  tytul: "Naczynie pomorskie",
+          plik: "NaczyniePomorskieBlend2AOSmaller.glb",
+          poster: "MuzeumNaczyniePomorskiePrev.png",
+          stanowisko: "Żuków, stan. 1,gm.…woj. lubelskie",
+          opis: "Naczynie rytualne, tzw. kernos z wczesnej epoki żelaza (600-500 BC, kultura pomorska)",
+          badania: "Badania wykopaliskowe w 1960 r. (J. Gurba)",
+          miejsce: "Zbiory Muzeum Narodowego w Lublinie",
+          literatura: "Czopek 1992, tabl. XLI; Kuśnierz 2010, ryc. 2: 1"
         }
-        
+		
       ],
       "rzym": [
         {
@@ -45,6 +46,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Złota klamerka esowata z okresu rzymskiego (koniec II w. po Chr., kultura wielbarska)",
           miejsce: "Zbiory Muzeum Zamojskiego w Zamościu",
           literatura: ""
+        },
+		{
+		  tytul: "Fibula Feugere 11",
+          plik: "PLFibula201942Cz1GlbAO.glb",
+          poster: "51. Fibula Feugere 11.png",
+          stanowisko: "Malbork-Wielbark, woj. pomorskie",
+          opis: "",
+          badania: "2019 (P. Łuczkiewicz, J. Kleemann)",
+          miejsce: "Muzeum Zamkowe w Malborku",
+          literatura: "Łuczkiewicz 2021"
         }
       ]
     };
