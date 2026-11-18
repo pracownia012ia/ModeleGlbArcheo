@@ -242,7 +242,7 @@ viewer.addEventListener('load', () => {
     let maJakakolwiekTekstureLubAO = false;
 
     // Przechodzimy przez wszystkie materiały w modelu
-    viewer.model.materials.forEach((material) => {
+    viewer.model.materials.forEach((material, idx) => {
       const pbr = material.pbrMetallicRoughness;
       const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
       const texMetRough = pbr.metallicRoughnessTexture ? pbr.metallicRoughnessTexture.texture : null;
