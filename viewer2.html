@@ -508,6 +508,8 @@
     });
 	// koniec --- FULLSCREEN ---
 	let domyslnyTarget = "auto auto auto";
+	
+	
 	// --- ZMIANA MATERIAŁU / WIDOK DETALI (AO TYLKO W TRYBIE DETALI) ---
 	const toggleMatBtn = document.getElementById('toggle-material-btn');
 	let zapisaneMaterialy = [];
@@ -532,9 +534,10 @@ viewer.addEventListener('load', () => {
     viewer.model.materials.forEach((material) => {
       const pbr = material.pbrMetallicRoughness;
       const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
+      const texMetRough = pbr.metallicRoughnessTexture ? pbr.metallicRoughnessTexture.texture : null;
       const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
 	  
-      if (texKolor || texAO) {
+      if (texKolor || texMetRough || texAO) {
         maJakakolwiekTekstureLubAO = true;
       }
 
@@ -542,7 +545,8 @@ viewer.addEventListener('load', () => {
       zapisaneMaterialy.push({
         material: material,
         kolorTex: texKolor,
-        kolorFactor: pbr.baseColorFactor,
+        metRoughTex: texMetRough,
+        kolorFactor: [...pbr.baseColorFactor],
         roughness: pbr.roughnessFactor,
         metallic: pbr.metallicFactor,
         aoTex: texAO
@@ -570,7 +574,12 @@ toggleMatBtn.addEventListener('click', () => {
       const pbr = dane.material.pbrMetallicRoughness;
 
       if (trybSurowy) {
-        // 1. Włączamy zapamiętaną mapę AO tylko w tym widoku
+        // 1. Odpinamy mapę Metallic/Roughness, aby uzyskać jednolity mat gipsu
+        if (pbr.metallicRoughnessTexture && dane.metRoughTex) {
+          pbr.metallicRoughnessTexture.setTexture(null);
+        }
+
+        // 2. Włączamy zapamiętaną mapę AO tylko w tym widoku
         if (dane.aoTex) {
           // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
           if (pbr.baseColorTexture) {
@@ -583,17 +592,20 @@ toggleMatBtn.addEventListener('click', () => {
           pbr.baseColorTexture.setTexture(null);
         }
 
-        // 2. Ustawiamy parametry matowego odlewu gipsowego
-        pbr.setBaseColorFactor([0.82, 0.80, 0.77, 1]);
+        // 3. Ustawiamy parametry matowego odlewu gipsowego
+        pbr.setBaseColorFactor([0.75, 0.73, 0.70, 1.0]);
         pbr.setMetallicFactor(0.0);
         pbr.setRoughnessFactor(0.75);
-        viewer.exposure = 0.92;
+        viewer.exposure = 0.88;
       } else {
-        // POWRÓT DO TEKSTURY: Przywracamy kolor, a AO z powrotem wyłączamy (null)
+        // POWRÓT DO TEKSTURY: Przywracamy kolor i mapę Roughness/Metallic, a AO wyłączamy
         if (pbr.baseColorTexture) {
           pbr.baseColorTexture.setTexture(dane.kolorTex);
         }
-        if (dane.material.occlusionTexture) {
+        if (pbr.metallicRoughnessTexture && dane.metRoughTex) {
+          pbr.metallicRoughnessTexture.setTexture(dane.metRoughTex);
+        }
+        if (dane.material.occlusionTexture && dane.aoTex) {
           dane.material.occlusionTexture.setTexture(null);
         }
 
