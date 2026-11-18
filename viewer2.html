@@ -532,9 +532,8 @@ viewer.addEventListener('load', () => {
       const pbr = material.pbrMetallicRoughness;
       const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
       const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
-	  const texMetRough = pbr.metallicRoughnessTexture ? pbr.metallicRoughnessTexture.texture : null;
 	  
-      if (texKolor || texMetRough || texAO) {
+      if (texKolor || texAO) {
         maJakakolwiekTekstureLubAO = true;
       }
 
@@ -542,7 +541,6 @@ viewer.addEventListener('load', () => {
       zapisaneMaterialy.push({
         material: material,
         kolorTex: texKolor,
-		metRoughTex: texMetRough,
         kolorFactor: pbr.baseColorFactor,
         roughness: pbr.roughnessFactor,
         metallic: pbr.metallicFactor,
@@ -572,14 +570,14 @@ toggleMatBtn.addEventListener('click', () => {
 
       if (trybSurowy) {
         // 1. Włączamy zapamiętaną mapę AO tylko w tym widoku
-        if (pbr.metallicRoughnessTexture) {
-          pbr.metallicRoughnessTexture.setTexture(null);
-        }
-
-        // 2. Włączamy AO w trybie detali
         if (dane.aoTex) {
-          if (pbr.baseColorTexture) pbr.baseColorTexture.setTexture(dane.aoTex);
-          if (dane.material.occlusionTexture) dane.material.occlusionTexture.setTexture(dane.aoTex);
+          // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
+          if (pbr.baseColorTexture) {
+            pbr.baseColorTexture.setTexture(dane.aoTex);
+          }
+          if (dane.material.occlusionTexture) {
+            dane.material.occlusionTexture.setTexture(dane.aoTex);
+          }
         } else if (pbr.baseColorTexture) {
           pbr.baseColorTexture.setTexture(null);
         }
@@ -591,9 +589,12 @@ toggleMatBtn.addEventListener('click', () => {
         viewer.exposure = 0.92;
       } else {
         // POWRÓT DO TEKSTURY: Przywracamy kolor, a AO z powrotem wyłączamy (null)
-        if (pbr.baseColorTexture) pbr.baseColorTexture.setTexture(dane.kolorTex);
-        if (pbr.metallicRoughnessTexture) pbr.metallicRoughnessTexture.setTexture(dane.metRoughTex);
-        if (dane.material.occlusionTexture) dane.material.occlusionTexture.setTexture(null);
+        if (pbr.baseColorTexture) {
+          pbr.baseColorTexture.setTexture(dane.kolorTex);
+        }
+        if (dane.material.occlusionTexture) {
+          dane.material.occlusionTexture.setTexture(null);
+        }
 
         pbr.setBaseColorFactor(dane.kolorFactor);
         pbr.setMetallicFactor(dane.metallic);
