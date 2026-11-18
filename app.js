@@ -247,7 +247,11 @@ viewer.addEventListener('load', () => {
       const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
       const texMetRough = pbr.metallicRoughnessTexture ? pbr.metallicRoughnessTexture.texture : null;
       const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
-	  
+	  console.warn(`[Materiał #${idx}]`, {
+        Kolor: !!texKolor,
+        MetallicRoughness: !!texMetRough,
+        AO_w_pliku: !!texAO
+      });
       if (texKolor || texMetRough || texAO) {
         maJakakolwiekTekstureLubAO = true;
       }
