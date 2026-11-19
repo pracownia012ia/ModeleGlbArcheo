@@ -4,7 +4,14 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
     const BAZA_OKRESOW = {
 	  "neolit": [
 		{
-			
+		  tytul: "Ostrze liściowate",
+          plik: "MLSztyletPaleoAOGlb.glb",
+          poster: "2_zdjecie_Ostrz_Lisciowate.png",
+          stanowisko: "Krasnystaw okolice, woj. Lubelskie",
+          opis: "Początek paleolitu górnego (k. jerzmanowicka)",
+          badania: "",
+          miejsce: "IA UMCS (dep. Muzeum Narodowe Lublin - wystawa)",
+          literatura: "J. Libera"
 		}  
 	  ],
       "wczesne_zelazo": [
