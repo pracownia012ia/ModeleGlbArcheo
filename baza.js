@@ -22,6 +22,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w latach …, T. Wiśniewski",
           miejsce: "Zbiory IA UMCS",
           literatura: ""
+		},
+		{
+		  tytul: "Harpun Kościany",
+          plik: "MLHarpunKosciGlbAO.glb",
+          poster: "4_zdjecie_Harpun.png",
+          stanowisko: "Krasnystaw okolice, woj. Lubelskie",
+          opis: "Harpun kościany z wczesnego mezolitu (ok. … tys. BC; kultura?)",
+          badania: "Przypadkowe znalezisko w … r.",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
 		}
 	  ],
       "wczesne_zelazo": [
