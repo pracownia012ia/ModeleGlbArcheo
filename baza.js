@@ -33,6 +33,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           miejsce: "Zbiory IA UMCS",
           literatura: ""
 		}
+		{
+		  tytul: "Rdzeń Obsydianowy",
+          plik: "MSZRdzenObsydianGlbAO.glb",
+          poster: "5_zdjecieV2_rdzen.png",
+          stanowisko: "Tominy, stan. 6, gm. Ożarów, woj. świętokrzyskie",
+          opis: "Rdzeń obsydianowy z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
+          badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Szeliga 2009, Tabl. I:6"
+		}
 	  ],
       "wczesne_zelazo": [
         {
