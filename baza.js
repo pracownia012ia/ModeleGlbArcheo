@@ -2,11 +2,15 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 
     // 2. Baza zabytków podzielona na okresy:
     const BAZA_OKRESOW = {
+	  "neolit": [
+		{
+			
+		}  
+	  ],
       "wczesne_zelazo": [
-		
         {
           tytul: "Kubek z ornamentem",
-          plik: "EKInkrustowanyKubekGLBVer2AO.glb",
+          plik: "EKInkrustowanyKubekGLBVer2AOver2.glb",
           poster: "EKInkrustowanyKubekPrev.png",
           stanowisko: "Jakubowice Murowane, stan. 5, gmwoj. lubelskie",
           opis: "Kubek z ornamentem wypełnionym białą inkrustacją z wczesnej epoki żelaza (…BC, kultura łużycka)",
