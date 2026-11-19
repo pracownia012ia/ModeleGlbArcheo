@@ -12,7 +12,17 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Przypadkowe znalezisko powierzchniowe w … r.",
           miejsce: "IA UMCS (dep. Muzeum Narodowe Lublin - wystawa)",
           literatura: ""
-		}  
+		}, 
+		{
+		  tytul: "Rdzenie Krzemienne",
+          plik: "MSzeligaRdzeniePolaczoneglbAO.glb",
+          poster: "MSRdzenKlem1Prev.png",
+          stanowisko: "Klementowice, woj. Lubelskie",
+          opis: "Składanka wytworów z krzemienia świeciechowskiego z późnego paleolitu (ok. … tys. BC; kultura magdaleńska)",
+          badania: "Badania wykopaliskowe w latach …, T. Wiśniewski",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
+		}
 	  ],
       "wczesne_zelazo": [
         {
