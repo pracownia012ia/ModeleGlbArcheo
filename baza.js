@@ -40,7 +40,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
       "rzym": [
         {
           tytul: "Zapinka Kaczkowata",
-          plik: "MZFibulaKaczk.glb",
+          plik: "MZFibulaKaczkAO.glb",
           poster: "56. zapinka kaczka.png",
           stanowisko: "Masłomęcz, stan.…,gm. Hrubieszów, ",
           opis: "Brązowa zapinka w kształcie kaczki AVII typu Masłomęcz z okresu rzymskiego (koniec II – początek III w. po Chr., kultura wielbarska)",
@@ -50,7 +50,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
         },
 		{
           tytul: "Złota klamerka esowata",
-          plik: "MZKlamEsoAuGlb.glb",
+          plik: "MZKlamEsoAuGlbAO.glb",
           poster: "MZKlamEsoAuGlb-screenshot.png",
           stanowisko: "Masłomęcz, stan.…,gm. Hrubieszów,woj. lubelskie",
           opis: "Złota klamerka esowata z okresu rzymskiego (koniec II w. po Chr., kultura wielbarska)",
