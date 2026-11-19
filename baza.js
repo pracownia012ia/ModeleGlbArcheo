@@ -10,7 +10,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
       "wczesne_zelazo": [
         {
           tytul: "Kubek z ornamentem",
-          plik: "EKInkrustowanyKubekGLBVer2AOver2.glb",
+          plik: "EKInkrustowanyKubekGLBVer2AO.glb",
           poster: "EKInkrustowanyKubekPrev.png",
           stanowisko: "Jakubowice Murowane, stan. 5, gmwoj. lubelskie",
           opis: "Kubek z ornamentem wypełnionym białą inkrustacją z wczesnej epoki żelaza (…BC, kultura łużycka)",
@@ -20,7 +20,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
         },
         {
 		  tytul: "Naczynie pomorskie",
-          plik: "NaczyniePomorskieBlend2AOSmaller.glb",
+          plik: "NaczyniePomorskieBlend2AOSmallerver2.glb",
           poster: "MuzeumNaczyniePomorskiePrev.png",
           stanowisko: "Żuków, stan. 1,gm.…woj. lubelskie",
           opis: "Naczynie rytualne, tzw. kernos z wczesnej epoki żelaza (600-500 BC, kultura pomorska)",
