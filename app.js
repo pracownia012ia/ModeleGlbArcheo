@@ -202,7 +202,10 @@
 
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
-        viewerSection.requestFullscreen().catch(err => console.warn(err));
+        viewerSection.requestFullscreen().catch(() => {
+      // 2. Jeśli CMS uczelni zablokował fullscreen w iframe, otwieramy w nowej karcie
+      window.open(window.location.href, '_blank', 'noopener,noreferrer');
+    });
       } else {
         document.exitFullscreen();
       }
