@@ -8,10 +8,10 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           plik: "MLSztyletPaleoAOGlb.glb",
           poster: "2_zdjecie_Ostrz_Lisciowate.png",
           stanowisko: "Krasnystaw okolice, woj. Lubelskie",
-          opis: "Początek paleolitu górnego (k. jerzmanowicka)",
-          badania: "",
+          opis: "Bifacjalne ostrze liściowate z początku paleolitu górnego (ok. … tys. BC; kultura jerzmanowicka)",
+          badania: "Przypadkowe znalezisko powierzchniowe w … r.",
           miejsce: "IA UMCS (dep. Muzeum Narodowe Lublin - wystawa)",
-          literatura: "J. Libera"
+          literatura: ""
 		}  
 	  ],
       "wczesne_zelazo": [
@@ -54,7 +54,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           poster: "MZKlamEsoAuGlb-screenshot.png",
           stanowisko: "Masłomęcz, stan.…,gm. Hrubieszów,woj. lubelskie",
           opis: "Złota klamerka esowata z okresu rzymskiego (koniec II w. po Chr., kultura wielbarska)",
-          badania: "Złota klamerka esowata z okresu rzymskiego (koniec II w. po Chr., kultura wielbarska)",
+          badania: "Badania wykopaliskowe w … r. (A. Kokowski)",
           miejsce: "Zbiory Muzeum Zamojskiego w Zamościu",
           literatura: ""
         },
@@ -63,10 +63,10 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           plik: "PLFibula201942Cz1GlbAO.glb",
           poster: "51. Fibula Feugere 11.png",
           stanowisko: "Malbork-Wielbark, woj. pomorskie",
-          opis: "",
-          badania: "2019 (P. Łuczkiewicz, J. Kleemann)",
-          miejsce: "Muzeum Zamkowe w Malborku",
-          literatura: "Łuczkiewicz 2021"
+          opis: "Brązowa fibula typu Feugère 11 z młodszego okresu przedrzymskiego (koniec I w. przed Chr., kultura ……)",
+          badania: "Badania wykopaliskowe w 2019 r. (P. Łuczkiewicz, J. Kleemann)",
+          miejsce: "Zbiory Muzeum Zamkowego w Malborku",
+          literatura: "Kuzioła, Łuczkiewicz 2024"
         }
       ]
     };

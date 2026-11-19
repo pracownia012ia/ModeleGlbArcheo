@@ -212,9 +212,11 @@
       if (document.fullscreenElement) {
         fullscreenBtn.textContent = "✕ Zamknij pełny ekran";
         fullscreenBtn.classList.add('active');
+		toggleSidebarBtn.style.display = "none";
       } else {
         fullscreenBtn.textContent = "⛶ Pełny ekran";
         fullscreenBtn.classList.remove('active');
+		toggleSidebarBtn.style.display = "";
       }
     });
 	// koniec --- FULLSCREEN ---
@@ -247,11 +249,6 @@ viewer.addEventListener('load', () => {
       const texKolor = pbr.baseColorTexture ? pbr.baseColorTexture.texture : null;
       const texMetRough = pbr.metallicRoughnessTexture ? pbr.metallicRoughnessTexture.texture : null;
       const texAO = material.occlusionTexture ? material.occlusionTexture.texture : null;
-	  console.warn(`[Materiał #${idx}]`, {
-        Kolor: !!texKolor,
-        MetallicRoughness: !!texMetRough,
-        AO_w_pliku: !!texAO
-      });
       if (texKolor || texMetRough || texAO) {
         maJakakolwiekTekstureLubAO = true;
       }
@@ -284,7 +281,6 @@ toggleMatBtn.addEventListener('click', () => {
   if (modelMaWarianty) {
     const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
     viewer.variantName = docelowyWariant;
-	console.warn(`Obiekt ma warianty`);
   } else {
     zapisaneMaterialy.forEach((dane) => {
       const pbr = dane.material.pbrMetallicRoughness;
