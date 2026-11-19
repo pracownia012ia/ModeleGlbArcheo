@@ -284,6 +284,7 @@ toggleMatBtn.addEventListener('click', () => {
   if (modelMaWarianty) {
     const docelowyWariant = trybSurowy ? viewer.availableVariants[1] : viewer.availableVariants[0];
     viewer.variantName = docelowyWariant;
+	console.warn(`Obiekt ma warianty`);
   } else {
     zapisaneMaterialy.forEach((dane) => {
       const pbr = dane.material.pbrMetallicRoughness;
