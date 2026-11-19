@@ -52,6 +52,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
           miejsce: "Zbiory IA UMCS",
           literatura: "Szeliga et al. w druku"
+		},
+		{
+		  tytul: "Zdobiona Czarka",
+          plik: "MuzeumNaczynieKCWRGlbAO.glb",
+          poster: "7_zdjecie_Naczynie.png",
+          stanowisko: "Świerszczów-Kolonia, stan. 28, gm. Hrubieszów, woj. lubelskie",
+          opis: "Czarka zdobiona w stylu wschodniolinearnym z wczesnego neolitu (VI/V tys. BC; kultura bukowogórska/ gr. Szarvas Érpart) ",
+          badania: "Badania wykopaliskowe w 1988 r. (A. Kokowski, A. Zakościelna, H. Taras)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Zakościelna 1988, Ryc. 2: b"
 		}
 	  ],
       "wczesne_zelazo": [
