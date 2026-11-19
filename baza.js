@@ -20,7 +20,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
         },
         {
 		  tytul: "Naczynie pomorskie",
-          plik: "NaczyniePomorskieBlend2AOSmallerver2.glb",
+          plik: "NaczyniePomorskieBlend2AOVer2.glb",
           poster: "MuzeumNaczyniePomorskiePrev.png",
           stanowisko: "Żuków, stan. 1,gm.…woj. lubelskie",
           opis: "Naczynie rytualne, tzw. kernos z wczesnej epoki żelaza (600-500 BC, kultura pomorska)",
