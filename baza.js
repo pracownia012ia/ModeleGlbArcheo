@@ -42,6 +42,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
           miejsce: "Zbiory IA UMCS",
           literatura: "Szeliga 2009, Tabl. I:6"
+		},
+		{
+		  tytul: "Paciorek Grafitowy",
+          plik: "MSZPaciorekGrafitGlbAO.glb",
+          poster: "6_zdjecie_Paciorek.png",
+          stanowisko: "Tominy, stan. 6, gm. Ożarów, woj. świętokrzyskie",
+          opis: "Paciorek grafitowy z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
+          badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Szeliga et al. w druku"
 		}
 	  ],
       "wczesne_zelazo": [
