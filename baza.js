@@ -32,7 +32,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Przypadkowe znalezisko w … r.",
           miejsce: "Zbiory IA UMCS",
           literatura: ""
-		}
+		},
 		{
 		  tytul: "Rdzeń Obsydianowy",
           plik: "MSZRdzenObsydianGlbAO.glb",
