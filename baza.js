@@ -106,12 +106,22 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 		{
 		  tytul: "Sztylet Miedziany",
           plik: "MLSztylVadastraGlbAO.glb",
-          poster: "14_zdjecie_Grot",
+          poster: "14_zdjecie_Grot.png",
           stanowisko: "Strzyżów stan. 26, gm. Horodło, woj. lubelskie",
           opis: "Sztylet miedziany typu Vadastra, przerobiony na zawieszkę; atrybut wysoko postawionego mężczyzny z eneolitu (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska).",
           badania: "Badania wykopaliskowe w 1994 r. (A. Zakościelna)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Zakościelna A., Adamczak K., Garbacz-Klempka A., Kowalski Ł. 2023. A Cucuteni-Vădastra Type Dagger from Site 26 at Strzyżów (S-E Poland) Attests to the Intercultural Landscape of the Eneolithic Eastern Carpathians. Analecta Archaeologica Ressoviensia 18, 83–95."
+		},
+		{
+		  tytul: "Wiór Makrolityczny",
+          plik: "PMWiorSandGlbAO.glb",
+          poster: "15_zdjecie_Wior.png",
+          stanowisko: "Pawłów, stan. 3, gm. Zawichost, woj. świętokrzyskie",
+          opis: "Makrolityczny wiór z krzemienia świeciechowskiego wchodzący w skład depozytu wyrobów krzemiennych odkrytego pod obstawą grobowca trapezowatego z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          badania: "Badania wykopaliskowe w … r. (B. Bargieł, M. Florek).",
+          miejsce: "Zbiory Muzeum Zamkowego w Sandomierzu",
+          literatura: "Bargieł, Florek 2006; Florek 2020"
 		}
 	  ],
       "wczesne_zelazo": [
