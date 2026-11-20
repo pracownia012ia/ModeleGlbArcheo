@@ -82,6 +82,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Zakościelna A., Gurba J. 1997. Z problematyki kultury malickiej na Wyżynie Lubelsko-Wołyńskiej. Archeologia Polski Środkowowschodniej 2, 201-209."
+		},
+		{
+		  tytul: "Wenus - Las Stocki",
+          plik: "MLWenusLasStockiAO.glb",
+          poster: "10_zdjecie_Wenus.png",
+          stanowisko: "Las Stocki, stan. 7A, gm. Końskowola, woj. lubelskie",
+          opis: "Venus – niewielka figurka gliniana przedstawiająca kobietę w tzw. pozycji orantes (modląca się) z eneolitu (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska). Figurka mogła być zwieńczeniem wylewu naczynia służącego do celów obrzędowych.",
+          badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna, H. Taras)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Zakościelna A. 1986. Z badań osady kultury wołyńsko-lubelskiej ceramiki malowanej w Lesie Stockim, stan. 7, gm. Końskowola. Sprawozdania Archeologiczne 38, 31-48."
 		}
 	  ],
       "wczesne_zelazo": [
