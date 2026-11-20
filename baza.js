@@ -41,7 +41,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Rdzeń obsydianowy z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
           badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
           miejsce: "Zbiory IA UMCS",
-          literatura: "Szeliga 2009, Tabl. I:6"
+          literatura: "Szeliga M. 2009. Znaczenie obsydianu karpackiego w gospodarce surowcowej najstarszych społeczności rolniczych na ziemiach polskich, [w:] Gancarski J. (red.) Surowce naturalne w Karpatach oraz ich wykorzystanie w pradziejach i wczesnym średniowieczu, Krosno: Muzeum Podkarpackie, 287-324."
 		},
 		{
 		  tytul: "Paciorek Grafitowy",
@@ -51,7 +51,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Paciorek grafitowy z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
           badania: "Badania wykopaliskowe w 2006 r. (M. Szeliga i A. Zakościelna )",
           miejsce: "Zbiory IA UMCS",
-          literatura: "Szeliga et al. w druku"
+          literatura: "Szeliga M., Přichystal  A., Miśta-Jakubowska E., Všianský D., Ryguła A., Czech-Błońska R. w druku. An exceptional stone bead from the Linear Pottery culture settlement in Tominy (S Poland) in the light of archaeometric analyses. [in:] Kraszewska A., Nowak M., Skłucki J. (eds.) Afferant montes pacem pópulo, et colles iustítiam. Studies in Honour of Professor Paweł Valde-Nowak, Kraków."
 		},
 		{
 		  tytul: "Zdobiona Czarka",
@@ -61,7 +61,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Czarka zdobiona w stylu wschodniolinearnym z wczesnego neolitu (VI/V tys. BC; kultura bukowogórska/ gr. Szarvas Érpart) ",
           badania: "Badania wykopaliskowe w 1988 r. (A. Kokowski, A. Zakościelna, H. Taras)",
           miejsce: "Zbiory IA UMCS",
-          literatura: "Zakościelna 1988, Ryc. 2: b"
+          literatura: "Zakościelna A. 1988. Wielokulturowe stanowisko 28 w Świerszczowie Kolonii gm. Hrubieszów. W: J. Gurba (red.), Sprawozdania z badań terenowych Katedry Archeologii UMCS w 1988 roku. Lublin: Uniwersytet Marii Curie-Skłodowskiej, Katedra Archeologii, 6-11"
 		},
 		{
 		  tytul: "Ciężarki Tkackie",
