@@ -67,11 +67,21 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 		  tytul: "Ciężarki Tkackie",
           plik: "AZPrzesliki2FinalAoGlb.glb",
           poster: "8_zdjecie_Ciezarek.png",
-          stanowisko: "ŚŚwierszczów-Kolonia, stan. 28gm. Hrubieszów, ",
+          stanowisko: "Świerszczów-Kolonia, stan. 28gm. Hrubieszów, ",
           opis: "Ciężarki tkackie z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
           badania: "Badania wykopaliskowe w 1988 r. (A. Zakościelna, H. Taras)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Gawryjołek-Szeliga 2009"
+		},
+		{
+		  tytul: "Czarka k. Malicka",
+          plik: "AZNaczynkoMalickieGlbAO.glb",
+          poster: "9_zdjecie_Malickie.png",
+          stanowisko: "Las Stocki, stan. 7A, gm. Końskowola, woj. lubelskie",
+          opis: "Czarka z ornamentem kłutym z wczesnego neolitu (1 poł. V tys. BC, kultura malicka)",
+          badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Zakościelna A., Gurba J. 1997. Z problematyki kultury malickiej na Wyżynie Lubelsko-Wołyńskiej. Archeologia Polski Środkowowschodniej 2, 201-209."
 		}
 	  ],
       "wczesne_zelazo": [
