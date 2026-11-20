@@ -102,6 +102,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Zakościelna A. 1986. Z badań osady kultury wołyńsko-lubelskiej ceramiki malowanej w Lesie Stockim, stan. 7, gm. Końskowola. Sprawozdania Archeologiczne 38, 31-48."
+		},
+		{
+		  tytul: "Sztylet Miedziany",
+          plik: "MLSztylVadastraGlbAO.glb",
+          poster: "14_zdjecie_Grot",
+          stanowisko: "Strzyżów stan. 26, gm. Horodło, woj. lubelskie",
+          opis: "Sztylet miedziany typu Vadastra, przerobiony na zawieszkę; atrybut wysoko postawionego mężczyzny z eneolitu (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska).",
+          badania: "Badania wykopaliskowe w 1994 r. (A. Zakościelna)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Zakościelna A., Adamczak K., Garbacz-Klempka A., Kowalski Ł. 2023. A Cucuteni-Vădastra Type Dagger from Site 26 at Strzyżów (S-E Poland) Attests to the Intercultural Landscape of the Eneolithic Eastern Carpathians. Analecta Archaeologica Ressoviensia 18, 83–95."
 		}
 	  ],
       "wczesne_zelazo": [
