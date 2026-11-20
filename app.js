@@ -267,7 +267,7 @@ viewer.addEventListener('load', () => {
         aoTex: texAO
       });
 
-      // KLUCZOWE: Wyłączamy AO na start, aby nie przyciemniało zwykłego modelu z teksturą!
+      
       if (material.occlusionTexture && texAO) {
         material.occlusionTexture.setTexture(null);
       }
@@ -289,12 +289,12 @@ toggleMatBtn.addEventListener('click', () => {
       const pbr = dane.material.pbrMetallicRoughness;
 
       if (trybSurowy) {
-        // 1. Odpinamy mapę Metallic/Roughness, aby uzyskać jednolity mat gipsu
+        // 1. Odpinamy mapę Metallic/Roughness, aby uzyskać jednolity mat
         if (pbr.metallicRoughnessTexture && dane.metRoughTex) {
           pbr.metallicRoughnessTexture.setTexture(null);
         }
 
-        // 2. Włączamy zapamiętaną mapę AO tylko w tym widoku
+        
         if (dane.aoTex) {
           // Podkładamy AO pod baseColorTexture dla wyraźnego światłocienia w zagłębieniach
           if (pbr.baseColorTexture) {

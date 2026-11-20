@@ -69,7 +69,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           tytul: "Kubek z ornamentem",
           plik: "EKInkrustowanyKubekGLBVer2AO.glb",
           poster: "EKInkrustowanyKubekPrev.png",
-          stanowisko: "Jakubowice Murowane, stan. 5, gmwoj. lubelskie",
+          stanowisko: "Jakubowice Murowane, stan. 5, woj. lubelskie",
           opis: "Kubek z ornamentem wypełnionym białą inkrustacją z wczesnej epoki żelaza (…BC, kultura łużycka)",
           badania: "Badania wykopaliskowe w … r. (U. Kurzątkowska, TYLKO?)",
           miejsce: "Zbiory IA UMCS",
