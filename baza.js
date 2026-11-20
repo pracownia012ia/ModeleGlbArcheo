@@ -62,6 +62,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1988 r. (A. Kokowski, A. Zakościelna, H. Taras)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Zakościelna 1988, Ryc. 2: b"
+		},
+		{
+		  tytul: "Ciężarki Tkackie",
+          plik: "AZPrzesliki2FinalAoGlb.glb",
+          poster: "8_zdjecie_Ciezarek.png",
+          stanowisko: "ŚŚwierszczów-Kolonia, stan. 28gm. Hrubieszów, ",
+          opis: "Ciężarki tkackie z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
+          badania: "Badania wykopaliskowe w 1988 r. (A. Zakościelna, H. Taras)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Gawryjołek-Szeliga 2009"
 		}
 	  ],
       "wczesne_zelazo": [
