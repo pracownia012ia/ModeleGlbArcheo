@@ -64,16 +64,6 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           literatura: "Zakościelna A. 1988. Wielokulturowe stanowisko 28 w Świerszczowie Kolonii gm. Hrubieszów. W: J. Gurba (red.), Sprawozdania z badań terenowych Katedry Archeologii UMCS w 1988 roku. Lublin: Uniwersytet Marii Curie-Skłodowskiej, Katedra Archeologii, 6-11"
 		},
 		{
-		  tytul: "Ciężarki Tkackie",
-          plik: "AZPrzesliki2FinalAoGlb.glb",
-          poster: "8_zdjecie_Ciezarek.png",
-          stanowisko: "Świerszczów-Kolonia, stan. 28gm. Hrubieszów, ",
-          opis: "Ciężarki tkackie z wczesnego neolitu (VI/V tys. BC; kultura ceramiki wstęgowej rytej)",
-          badania: "Badania wykopaliskowe w 1988 r. (A. Zakościelna, H. Taras)",
-          miejsce: "Zbiory IA UMCS",
-          literatura: "Gawryjołek-Szeliga 2009"
-		},
-		{
 		  tytul: "Czarka k. Malicka",
           plik: "AZNaczynkoMalickieGlbAO.glb",
           poster: "9_zdjecie_Malickie.png",
@@ -102,6 +92,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1982 r. (A. Zakościelna)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Kadrow S., Zakościelna A. 2000. An Outline of the Evolution of Danubian Cultures in Małopolska and Western. In: A. Kośko (ed.), The western border area of the Tripolye culture (= Baltic-Pontic Studies 3). Poznań: Adam Mickiewicz University, Institute of Eastern Studies, Institute of Prehistory, 187-255."
+		},
+		{
+		  tytul: "Przęsliki Tkackie",
+          plik: "AZPrzesliki2FinalAoGlb.glb",
+          poster: "8_zdjecie_Ciezarek.png",
+          stanowisko: "Las Stocki, stan. 7, gm. Końskowola, woj. lubelskie",
+          opis: "Zdobiony przęślik gliniany – zatyczka do wrzeciona (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska). ",
+          badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Zakościelna A. 1986. Z badań osady kultury wołyńsko-lubelskiej ceramiki malowanej w Lesie Stockim, stan. 7, gm. Końskowola. Sprawozdania Archeologiczne 38, 31-48."
 		}
 	  ],
       "wczesne_zelazo": [
