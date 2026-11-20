@@ -92,6 +92,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1984 r. (A. Zakościelna, H. Taras)",
           miejsce: "Zbiory IA UMCS",
           literatura: "Zakościelna A. 1986. Z badań osady kultury wołyńsko-lubelskiej ceramiki malowanej w Lesie Stockim, stan. 7, gm. Końskowola. Sprawozdania Archeologiczne 38, 31-48."
+		},
+		{
+		  tytul: "Czarka Malowana",
+          plik: "AZNaczynieLubWolGlbAO.glb",
+          poster: "11_zdjecie_Czarka.png",
+          stanowisko: "Las Stocki, stan. 7A, gm. Końskowola, woj. lubelskie",
+          opis: "Czarka malowana białą olejną farbą wykonaną z kredy, tłuszczu zwierzęcego i kurzego białka z eneolitu (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska).",
+          badania: "Badania wykopaliskowe w 1982 r. (A. Zakościelna)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "Kadrow S., Zakościelna A. 2000. An Outline of the Evolution of Danubian Cultures in Małopolska and Western. In: A. Kośko (ed.), The western border area of the Tripolye culture (= Baltic-Pontic Studies 3). Poznań: Adam Mickiewicz University, Institute of Eastern Studies, Institute of Prehistory, 187-255."
 		}
 	  ],
       "wczesne_zelazo": [
