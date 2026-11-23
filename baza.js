@@ -152,6 +152,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1989 r. (J. Nogaj-Chachaj).",
           miejsce: "Zbiory IA UMCS",
           literatura: "J. Nogaj-Chachaj 1989, 1991"
+		},
+		{
+		  tytul: "Flasze z Kryzą",
+          plik: "MSzFlaszaKryza1-2GlbAO.glb",
+          poster: "19_zdjecie1_Flasza.png",
+          stanowisko: "Karmanowice, stan.35, gm. Wąwolnica,woj. lubelskie",
+          opis: "Flasza z kryzą imitująca główkę makówki z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          badania: "Badania wykopaliskowe w 1989 r. (J. Nogaj-Chachaj).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "J. Nogaj-Chachaj 1989, 1991"
 		}
 	  ],
       "wczesne_zelazo": [
