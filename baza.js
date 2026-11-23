@@ -122,6 +122,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w … r. (B. Bargieł, M. Florek).",
           miejsce: "Zbiory Muzeum Zamkowego w Sandomierzu",
           literatura: "Bargieł, Florek 2006; Florek 2020"
+		},
+		{
+		  tytul: "Wołki - Ucho",
+          plik: "MLWolkiUchoGlbAO.glb",
+          poster: "16_zdjecie_wolki.png",
+          stanowisko: "Krężnica Jara, stan.…gm. Niedrzwica Duża, woj. lubelskie",
+          opis: "Ucho w kształcie wołków w jarzmie z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          badania: "Ucho w kształcie wołków w jarzmie z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          miejsce: "Zbiory Muzeum Narodowego w Lublinie",
+          literatura: "Nosek S. 1947, Ryc. 14; 1957, 223 Gajewski 1949"
 		}
 	  ],
       "wczesne_zelazo": [
