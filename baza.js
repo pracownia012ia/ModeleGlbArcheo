@@ -182,7 +182,17 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1989 r. (J. Nogaj-Chachaj).",
           miejsce: "Zbiory IA UMCS",
           literatura: "J. Nogaj-Chachaj 1989, 1991"
-		}
+		},
+		{
+		  tytul: "Toporek - KAK",
+          plik: "BN-WToporekKamglbAO.glb",
+          poster: "22. BNWToporekKam.png",
+          stanowisko: "Ulów, stan. 3?gm. Tomaszów Lubelski, woj. lubelskie",
+          opis: "Topór kamienny z eneolitu (III tys. BC, kultura ceramiki sznurowej)",
+          badania: "Badania wykopaliskowe w ……… r. (B. Niezabitowska-Wiśniewska).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "J. Nogaj-Chachaj 1989, 1991"
+		},
 	  ],
       "wczesne_zelazo": [
         {
