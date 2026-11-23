@@ -175,7 +175,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 		},
 		{
 		  tytul: "Kubek - AnsaLunata",
-          plik: "MSzKubekAnsaFinalAO.glb",
+          plik: "MSzAnsaLunata1GlbAO.glb",
           poster: "21_zdjecie2_Ansa.png",
           stanowisko: "Karmanowice, stan.35, gm. Wąwolnica, woj. lubelskie",
           opis: "Kubek z uchem ansa lunata z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
