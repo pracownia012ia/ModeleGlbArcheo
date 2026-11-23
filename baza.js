@@ -95,7 +95,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
 		},
 		{
 		  tytul: "Przęsliki Tkackie",
-          plik: "AZPrzesliki2FinalAoGlb.glb",
+          plik: "AZPrzesliki2FinalAoGlbVer2.glb",
           poster: "8_zdjecie_Ciezarek.png",
           stanowisko: "Las Stocki, stan. 7, gm. Końskowola, woj. lubelskie",
           opis: "Zdobiony przęślik gliniany – zatyczka do wrzeciona (koniec V – poł. IV tys. BC, kultura lubelsko-wołyńska). ",
