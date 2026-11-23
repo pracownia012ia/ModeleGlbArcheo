@@ -88,7 +88,7 @@
 
     customElements.whenDefined('model-viewer').then(() => {
       if (listaZabytkow.length > 0) {
-        document.getElementById('liczba-zabytkow').textContent = `Zabytki w okresie (${wybranyOkres}) - (${listaZabytkow.length}):`;
+        document.getElementById('liczba-zabytkow').textContent = `Zabytki - (${listaZabytkow.length}):`;
         listaZabytkow.forEach((zabytek, index) => {
           // Generowanie Kafelka
           const btn = document.createElement('button');
