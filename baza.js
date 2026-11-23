@@ -191,8 +191,18 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Topór kamienny z eneolitu (III tys. BC, kultura ceramiki sznurowej)",
           badania: "Badania wykopaliskowe w ……… r. (B. Niezabitowska-Wiśniewska).",
           miejsce: "Zbiory IA UMCS",
-          literatura: "J. Nogaj-Chachaj 1989, 1991"
+          literatura: ""
 		},
+		{
+		  tytul: "Naczynie - KAK",
+          plik: "BNWMaleNaczynko2glbAO.glb",
+          poster: "23.BNWNaczynko2Prev.png",
+          stanowisko: "Ulów, stan. 3?gm. Tomaszów Lubelski, woj. lubelskie",
+          opis: "Naczynie gliniane z eneolitu (III tys. BC, kultura ceramiki sznurowej)",
+          badania: "Badania wykopaliskowe w ……… r. (B. Niezabitowska-Wiśniewska).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
+		}
 	  ],
       "wczesne_zelazo": [
         {
