@@ -132,6 +132,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Ucho w kształcie wołków w jarzmie z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
           miejsce: "Zbiory Muzeum Narodowego w Lublinie",
           literatura: "Nosek S. 1947, Ryc. 14; 1957, 223 Gajewski 1949"
+		},
+		{
+		  tytul: "Sztylety Kościane",
+          plik: "MSzSztylKosc3PolaczoneAO.glb",
+          poster: "17_zdjecie1_sztylet.png",
+          stanowisko: "Karmanowice, stan.35, gm. Wąwolnica,woj. lubelskie",
+          opis: "Sztylet kościany z kości łosia z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          badania: "Badania wykopaliskowe w 1989 r. (J. Nogaj-Chachaj).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "J. Nogaj-Chachaj 1989, 1991"
 		}
 	  ],
       "wczesne_zelazo": [
