@@ -162,6 +162,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           badania: "Badania wykopaliskowe w 1989 r. (J. Nogaj-Chachaj).",
           miejsce: "Zbiory IA UMCS",
           literatura: "J. Nogaj-Chachaj 1989, 1991"
+		},
+		{
+		  tytul: "Kubek - AnsaLunata",
+          plik: "MSzKubekAnsuArtecFinalv2AO.glb",
+          poster: "20_zdjecie1__ansa",
+          stanowisko: "Tominy, stan. 6,gm. Ożarów, woj. świętokrzyskie",
+          opis: "Kubek z uchem ansa lunata z eneolitu (poł. IV – pocz. III tys. BC, kultura pucharów lejkowatych)",
+          badania: "Badania wykopaliskowe w 2009 r. (M. Szeliga).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: "J. Nogaj-Chachaj 1989, 1991"
 		}
 	  ],
       "wczesne_zelazo": [
