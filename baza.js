@@ -204,6 +204,19 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           literatura: ""
 		}
 	  ],
+	  "Braz": [
+		{
+          tytul: "Naczynko",
+          plik: "HTNAczynkoMaleGlbAO.glb",
+          poster: "31_zdjecie_Naczynie.png",
+          stanowisko: "Gnieszowice, stan. 59, gm. Koprzywnica, woj. świętokrzyskie",
+          opis: "Naczynie z grobu z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
+          badania: "Badania wykopaliskowe w … r. (H. Taras, M. Florek?)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
+        },
+
+	  ],
       "wczesne_zelazo": [
         {
           tytul: "Kubek z ornamentem",
