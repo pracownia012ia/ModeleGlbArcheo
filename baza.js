@@ -215,7 +215,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           miejsce: "Zbiory IA UMCS",
           literatura: ""
         },
-
+		{
+          tytul: "Sztylet - Brazowy",
+          plik: "HTSztyletBrazGlbAO.glb",
+          poster: "33_zdjecie_Sztylet.png",
+          stanowisko: "Zimno, stan…, gm. Łaszczów, .woj. Lubelskie",
+          opis: "Importowany (skąd?) sztylet brązowy z epoki brązu (ok. 1400-1300 BC, kultura trzciniecka)",
+          badania: "Odkrycie przypadkowe w 2012 r.",
+          miejsce: "Zbiory Muzeum Regionalnego im. dr. Janusza Petera w Tomaszowie Lubelskim",
+          literatura: "Taras 2019a"
+        },
 	  ],
       "wczesne_zelazo": [
         {
