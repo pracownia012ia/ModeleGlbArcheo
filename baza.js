@@ -217,7 +217,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
         },
 		{
           tytul: "Sztylet - Brazowy",
-          plik: "HTSztyletBrazGlbAO.glb",
+          plik: "HTSztyletBrazGlbAOVer3.glb",
           poster: "33_zdjecie_Sztylet.png",
           stanowisko: "Zimno, stan…, gm. Łaszczów, .woj. Lubelskie",
           opis: "Importowany (skąd?) sztylet brązowy z epoki brązu (ok. 1400-1300 BC, kultura trzciniecka)",
