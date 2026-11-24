@@ -216,7 +216,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           literatura: ""
         },
 		{
-          tytul: "Sztylet - Brazowy",
+          tytul: "Sztylet Brązowy",
           plik: "HTSztyletBrazGlbAOVer3.glb",
           poster: "33_zdjecie_Sztylet.png",
           stanowisko: "Zimno, stan…, gm. Łaszczów, .woj. Lubelskie",
@@ -233,7 +233,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Bifacjalny sierp z krzemienia wołyńskiego (???) z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
           badania: "Badania wykopaliskowe w 1996 r. (J. Baginska, E. Banasiewicz, H.Taras), ",
           miejsce: "Zbiory Muzeum Regionalnego im. dr. Janusza Petera w Tomaszowie Lubelskim",
-          literatura: "(Bagińska, Banasiewicz, Taras 1997, ryc. 3b"
+          literatura: "Bagińska, Banasiewicz, Taras 1997, ryc. 3b"
         },
 		{
           tytul: "Miseczka ostrodenna",
@@ -243,7 +243,17 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           opis: "Miseczka ostrodenna z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
           badania: "Badania wykopaliskowe w 1996 r. (J. Baginska, E. Banasiewicz, H.Taras), ",
           miejsce: "Zbiory Muzeum Regionalnego im. dr. Janusza Petera w Tomaszowie Lubelskim",
-          literatura: "(Bagińska, Banasiewicz, Taras 1997, ryc. 3c"
+          literatura: "Bagińska, Banasiewicz, Taras 1997, ryc. 3c"
+        },
+		{
+          tytul: "Narzędzie Rogowe - 1",
+          plik: "MTNarzedzRogGlbAVer2AO.glb",
+          poster: "36_zdjecie_Rogowe.png",
+          stanowisko: "Podlodów, stan. 2,gm. Łaszczów, woj. Lubelskie",
+          opis: "Narzędzie rogowe z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
+          badania: "Badania wykopaliskowe w 1996 r. (J. Baginska, E. Banasiewicz, H.Taras), ",
+          miejsce: "Zbiory Muzeum Regionalnego im. dr. Janusza Petera w Tomaszowie Lubelskim",
+          literatura: "Bagińska, Banasiewicz, Taras 1997, ryc. 3c"
         },
 	  ],
       "wczesne_zelazo": [
