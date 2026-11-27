@@ -280,10 +280,20 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           plik: "MTNaczOkragloGlbAO.glb",
           poster: "40_zdjecie_naczynko.png",
           stanowisko: "Podlodów, stan. 2,gm. Łaszczów, woj. Lubelskie",
-          opis: "Bagińska, Niedźwiedź, Taras 2001, ryc. 4: 4",
+          opis: "Naczynko okrągłodenne z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
           badania: "Badania wykopaliskowe w 2002 r. (J. Baginska, J. Niedźwiedź, H.Taras)",
           miejsce: "Zbiory Muzeum Regionalnego im. dr. Janusza Petera w Tomaszowie Lubelskim",
           literatura: "Bagińska, Niedźwiedź, Taras 2001, ryc. 4: 4"
+        },
+		{
+          tytul: "Grot Brązowy",
+          plik: "BNWGrotBrazGlbAO.glb",
+          poster: "41.BNWGrotBrazPrev.png",
+          stanowisko: "Ulów, stan. 3gm. Tomaszów Lubelski woj. lubelskie",
+          opis: "Grot brązowy z epoki brązu (ok. 1400-1200 BC, kultura trzciniecka)",
+          badania: "Badania wykopaliskowe w ……… r. (B. Niezabitowska-Wiśniewska).",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
         },
 	  ],
       "wczesne_zelazo": [
