@@ -315,6 +315,16 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           miejsce: "Zbiory IA UMCS",
           literatura: ""
         },
+		{
+          tytul: "Grzechotka",
+          plik: "MTNaczOkragloGlbAO.glb",
+          poster: "46_zdjecie_Grzechotka.png",
+          stanowisko: "Wieprzec,stan.1 , gm. Zamość, woj. Lubelskie",
+          opis: "Gliniana grzechotka z epoki brązu/wczesnej epoki żelaza (…BC, kultura łużycka)",
+          badania: "",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
+        },
 	  ],
       "wczesne_zelazo": [
         {
