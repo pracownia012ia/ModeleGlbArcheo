@@ -325,6 +325,26 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           miejsce: "Zbiory IA UMCS",
           literatura: ""
         },
+		{
+          tytul: "Kubek z ornamentem",
+          plik: "EKInkrustowanyKubekGLBVer2AO.glb",
+          poster: "EKInkrustowanyKubekPrev.png",
+          stanowisko: "Jakubowice Murowane, stan. 5, woj. lubelskie",
+          opis: "Kubek z ornamentem wypełnionym białą inkrustacją z wczesnej epoki żelaza (…BC, kultura łużycka)",
+          badania: "Badania wykopaliskowe w … r. (U. Kurzątkowska, TYLKO?)",
+          miejsce: "Zbiory IA UMCS",
+          literatura: ""
+        },
+        {
+		  tytul: "Naczynie pomorskie",
+          plik: "NaczyniePomorskieBlend2AOVer2.glb",
+          poster: "MuzeumNaczyniePomorskiePrev.png",
+          stanowisko: "Żuków, stan. 1,gm.…woj. lubelskie",
+          opis: "Naczynie rytualne, tzw. kernos z wczesnej epoki żelaza (600-500 BC, kultura pomorska)",
+          badania: "Badania wykopaliskowe w 1960 r. (J. Gurba)",
+          miejsce: "Zbiory Muzeum Narodowego w Lublinie",
+          literatura: "Czopek 1992, tabl. XLI; Kuśnierz 2010, ryc. 2: 1"
+        }
 	  ],
       "wczesne_zelazo": [
         {
