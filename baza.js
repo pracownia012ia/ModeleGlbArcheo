@@ -296,7 +296,7 @@ const BAZA_URL = "https://pub-455c0d32f5c8404082c43a9158408b16.r2.dev";
           literatura: ""
         },
 		{
-          tytul: "Grot Brązowy",
+          tytul: "Kubeczek z uchem",
           plik: "EKKubeczekFinalglbAO.glb",
           poster: "44_zdjecie_kubek.png",
           stanowisko: "Wieprzec,stan.1, gm. Zamość, woj. Lubelskie",
